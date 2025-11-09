@@ -1,0 +1,21 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=IM+Fell+French+Canon+SC&family=Pinyon+Script&display=swap');
+
+/* CSS Variables */
+:root {
+    --strong-red: ;
+    --light-red: ;
+    --dark-red: ;
+    --strong-blue: ;
+    --light-blue: ;
+    --dark-blue: ;
+    --grey: ;
+    --primary-font: 'Cormorant Garamond', serif;
+    --secondary-font: 'IM Fell French Canon SC', serif;
+    --accent-font: 'Pinyon Script', 'Lucida Handwriting', serif;
+    --school-font: 'Edu Australia VIC WA NT Hand Guides', serif;
+}
+
+body{
+    font-family: var(--primary-font);
+}
