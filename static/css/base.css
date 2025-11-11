@@ -377,6 +377,111 @@ a:hover, button:hover {
 
 
 
+/* Account Pages */
+.account-container {
+    background-color: #faf9f7;
+    padding: 4rem 1rem;
+}
+
+.account-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+}
+
+.account-card h2 {
+    font-family: var(--secondary-font);
+    color: var(--dark-blue);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.account-card form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.account-card form label {
+    font-weight: 500;
+    color: #222;
+}
+
+.account-card form input {
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    font-family: var(--primary-font);
+    font-size: 1rem;
+}
+
+.account-card form input:focus {
+    border-color: var(--strong-blue);
+    box-shadow: 0 0 0 0.15rem rgba(0,0,145,0.15);
+    outline: none;
+}
+
+.account-card .btn {
+    width: 100%;
+    font-weight: 500;
+    border-radius: 25px;
+}
+
+.account-card p.text-center {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.account-card p.text-center a {
+    color: var(--strong-red);
+    text-decoration: none;
+}
+
+.account-card p.text-center a:hover {
+    color: var(--dark-red);
+}
+
+/* Logout confirmation page */
+.logout-card {
+    max-width: 400px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.logout-card h2 {
+    font-family: var(--secondary-font);
+    color: var(--dark-blue);
+    margin-bottom: 1.5rem;
+}
+
+.logout-card .btn-logout {
+    background-color: var(--strong-red);
+    color: #fff;
+    border-radius: 25px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.logout-card .btn-logout:hover {
+    background-color: var(--dark-red);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
