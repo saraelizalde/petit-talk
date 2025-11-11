@@ -1,6 +1,193 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-    <h1>Welcome to Petit Talk!</h1>
-    <p>Start learning and connecting with language enthusiasts.</p>
+<div class="container mt-5">
+
+    <!-- Hero / Intro Section -->
+    <section class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome to Petit Talk!</h1>
+        <p class="lead mt-3">
+            Connect with passionate teachers and fellow learners from around the world.
+            Practice your speaking skills and make learning a fun daily habit!
+        </p>
+
+        {% if user.is_authenticated %}
+        <a href="#" class="btn btn-primary btn-lg mt-3">Book a Class</a>
+        {% else %}
+        <div class="mt-4">
+            <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg me-3">Register</a>
+            <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-lg">Login</a>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- Teachers Carousel -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4">Meet Our Teachers</h2>
+        <div id="teachersCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <!-- Teacher 1 -->
+                <div class="carousel-item active text-center">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Teacher 1"
+                        width="120" height="120">
+                    <h5>Teacher One</h5>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, labore.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">View Profile</a>
+                </div>
+
+                <!-- Teacher 2 -->
+                <div class="carousel-item text-center">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Teacher 2"
+                        width="120" height="120">
+                    <h5>Teacher Two</h5>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, labore.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">View Profile</a>
+                </div>
+
+                <!-- Teacher 3 -->
+                <div class="carousel-item text-center">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Teacher 3"
+                        width="120" height="120">
+                    <h5>Teacher Three</h5>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, labore.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">View Profile</a>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#teachersCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#teachersCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4">Our Offers</h2>
+        <div class="row g-4 justify-content-center">
+            <!-- Offer 1 -->
+            <div class="col-md-4">
+                <div class="offer-card card border-0 shadow-sm text-center h-100">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="card-img-top" alt="Offer 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Offer One</h5>
+                        <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
+                            ab quaerat magni omnis beatae quibusdam?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Offer 2 -->
+            <div class="col-md-4">
+                <div class="offer-card card border-0 shadow-sm text-center h-100">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="card-img-top" alt="Offer 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Offer Two</h5>
+                        <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
+                            ab quaerat magni omnis beatae quibusdam?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Offer 3 -->
+            <div class="col-md-4">
+                <div class="offer-card card border-0 shadow-sm text-center h-100">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="card-img-top" alt="Offer 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Offer Three</h5>
+                        <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
+                            ab quaerat magni omnis beatae quibusdam?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="bg-light p-5 rounded mb-5 text-center">
+        <h2>Join Our Newsletter</h2>
+        <p>Get updates about new teachers, language tips, and offers straight to your inbox.</p>
+        <form method="post" action="#">
+            {% csrf_token %}
+            <div class="input-group justify-content-center mt-3">
+                <input type="email" name="email" class="form-control w-50" placeholder="Enter your email" required>
+                <button class="btn btn-primary" type="submit">Subscribe</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Comments / Testimonials Section -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4">What Our Students Say</h2>
+        <div id="commentsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <!-- Comment 1 -->
+                <div class="carousel-item active text-center">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Student 1"
+                        width="80" height="80">
+                    <blockquote class="blockquote">
+                        <p>"Petit Talk made me fall in love with learning again! My teacher is amazing."</p>
+                    </blockquote>
+                    <footer class="blockquote-footer">
+                        <a href="#" class="text-decoration-none">Sophie L.</a>
+                    </footer>
+                </div>
+
+                <!-- Comment 2 -->
+                <div class="carousel-item text-center">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Student 2"
+                        width="80" height="80">
+                    <blockquote class="blockquote">
+                        <p>"The sessions are so friendly and flexible. I improved my French conversation a lot!"</p>
+                    </blockquote>
+                    <footer class="blockquote-footer">
+                        <a href="#" class="text-decoration-none">Mark R.</a>
+                    </footer>
+                </div>
+
+                <!-- Comment 3 -->
+                <div class="carousel-item text-center">
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Student 3"
+                        width="80" height="80">
+                    <blockquote class="blockquote">
+                        <p>"I love being able to chat with real teachers from different countries."</p>
+                    </blockquote>
+                    <footer class="blockquote-footer">
+                        <a href="#" class="text-decoration-none">Hannah T.</a>
+                    </footer>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#commentsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#commentsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="add-comment container my-5">
+        <h3 class="text-center mb-4">Share your experience</h3>
+        <form>
+            <div class="mb-3">
+                <textarea class="form-control" placeholder="Write your comment here..." required></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </div>
+        </form>
+    </section>
+
+
+</div>
 {% endblock %}
