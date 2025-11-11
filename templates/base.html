@@ -80,7 +80,13 @@
                         <ul class="navbar-nav justify-content-end flex-wrap">
                             <li class="nav-item"><a class="nav-link" href="#">Offers</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Newsletter</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">My Bookings</a></li>
+                            {% if user.is_authenticated %}
+                                {% if user.profile.is_student %}
+                                    <li class="nav-item"><a class="nav-link" href="#">My Bookings</a></li>
+                                {% elif user.profile.is_teacher %}
+                                    <li class="nav-item"><a class="nav-link" href="#">Teacher Dashboard</a></li>
+                                {% endif %}
+                            {% endif %}
                             <li class="nav-item"><a class="nav-link" href="#">Book a Class</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">My Basket</a></li>
@@ -98,7 +104,7 @@
     <footer class="bg-light border-top mt-5 py-4">
         <div class="container">
             <div class="row align-items-center text-center text-md-start">
-                
+
                 <!-- Left -->
                 <div class="col-md-6 mb-3 mb-md-0">
                     <h5 class="fw-bold mb-1">Petit Talk</h5>
