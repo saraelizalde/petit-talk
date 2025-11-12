@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg rounded-4 p-4 text-center profile-card">
+                
+                <!-- Profile Image -->
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" 
+                         class="rounded-circle mb-3 profile-img" 
+                         alt="{{ profile.user.username }}">
+                {% else %}
+                    <img src="{% static 'images/default_profile.png' %}" 
+                         class="rounded-circle mb-3 profile-img" 
+                         alt="Default Profile">
+                {% endif %}
+
+                <!-- Username & Language Level -->
+                <h3 class="fw-bold mb-1">{{ profile.user.username }}</h3>
+                {% if profile.is_teacher %}
+                    <span class="badge bg-primary mb-2">Teacher</span>
+                {% else %}
+                    <span class="badge bg-success mb-2">Student</span>
+                {% endif %}
+                <p class="text-muted mb-3">
+                    Language Level: {{ profile.get_language_level_display|default:"Not specified" }}
+                </p>
+
+                <!-- Bio -->
+                <p class="mb-4">{{ profile.bio|default:"This teacher hasn’t written a bio yet." }}</p>
+
+                <!-- Video -->
+                {% if profile.intro_video %}
+                <div class="mb-4">
+                    <video controls class="w-100 rounded">
+                        <source src="{{ profile.intro_video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                {% endif %}
+
+                <hr class="my-4">
+
+                <!-- Goals -->
+                {% if profile.goals %}
+                    <h5 class="fw-semibold mb-2">Teacher Goals</h5>
+                    <p class="mb-4">{{ profile.goals }}</p>
+                {% endif %}
+
+                <!-- Favorites -->
+                {% if profile.favorite_word or profile.favorite_movie or profile.favorite_book or profile.favorite_song %}
+                <h5 class="fw-semibold mb-3">Favorites</h5>
+                <ul class="list-group list-group-flush mb-4">
+                    {% if profile.favorite_word %}
+                        <li class="list-group-item"><strong>Word:</strong> {{ profile.favorite_word }}</li>
+                    {% endif %}
+                    {% if profile.favorite_movie %}
+                        <li class="list-group-item"><strong>Movie:</strong> {{ profile.favorite_movie }}</li>
+                    {% endif %}
+                    {% if profile.favorite_book %}
+                        <li class="list-group-item"><strong>Book:</strong> {{ profile.favorite_book }}</li>
+                    {% endif %}
+                    {% if profile.favorite_song %}
+                        <li class="list-group-item"><strong>Song:</strong> {{ profile.favorite_song }}</li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+
+                <!-- Action Button -->
+                <div class="text-center">
+                    <a href="#" class="btn btn-primary btn-lg">Book a Class</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

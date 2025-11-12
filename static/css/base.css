@@ -485,10 +485,199 @@ a:hover, button:hover {
 
 
 
+/* Profile Image */
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #f8f9fa;
+    display: block;
+    margin: 0 auto 1rem auto;
+    transition: all 0.3s ease;
+}
+
+/* Card */
+.card {
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* Username and Badge */
+h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.35em 0.75em;
+}
+
+.badge-teacher {
+    background-color: var(--light-blue);
+    color: #fff;
+}
+.badge-teacher:hover {
+    background-color: var(--strong-blue);
+}
+
+.badge-student {
+    background-color: var(--light-red);
+    color: #fff;
+}
+.badge-student:hover {
+    background-color: var(--strong-red);
+}
+
+/* Favorites List */
+.list-group-item {
+    border-left: 4px solid;
+    padding-left: 12px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.favorites-header {
+    color: var(--strong-red);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--strong-blue);
+    border-color: var(--strong-blue);
+}
+.btn-primary:hover {
+    background-color: var(--dark-blue);
+    border-color: var(--dark-blue);
+}
+
+/* Intro video */
+.ratio {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Edit Profile Image */
+.edit-profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #f8f9fa;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Inputs styling */
+form input, form textarea, form select {
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    font-family: var(--primary-font);
+    margin-bottom: 1rem;
+}
+
+form input:focus, form textarea:focus, form select:focus {
+    border-color: var(--strong-blue);
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.15);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--strong-blue);
+    border-color: var(--strong-blue);
+    color: #fff;
+}
+
+.btn-outline-danger {
+    color: var(--strong-red);
+    border-color: var(--strong-red);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--strong-red);
+    color: #fff;
+}
+
+/* Profile Page Specific Styles */
+.profile-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.profile-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* Responsive profile image */
+.profile-img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border: 4px solid #f8f9fa;
+    max-width: 40%;
+}
+
+@media (max-width: 576px) {
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.list-group-item {
+    border-left: 4px solid #0d6efd;
+    padding-left: 12px;
+    margin-bottom: 6px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Media Query - Tablet <= 768px */
 
 @media (max-width: 767.98px) {
     footer .col-md-6 {
         text-align: center;
+    }
+}
+
+/* Make profile image shrink on smaller screens */
+@media (max-width: 768px) {
+    .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-img {
+        width: 90px;
+        height: 90px;
     }
 }

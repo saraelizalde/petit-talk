@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 text-center">
+            <div class="card shadow-sm rounded-4 p-4">
+
+                <!-- Profile Image -->
+                {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.user.username }}" class="profile-img mb-3">
+                {% else %}
+                <img src="{% static 'images/default.png' %}" alt="Default avatar" class="profile-img mb-3">
+                {% endif %}
+
+                <!-- Username + Role -->
+                <h3 class="fw-bold mb-1">{{ profile.user.username }}</h3>
+                {% if profile.is_teacher %}
+                <span class="badge badge-teacher mb-3">Teacher</span>
+                {% else %}
+                <span class="badge badge-student mb-3">Student</span>
+                {% endif %}
+
+                <!-- Bio, Language, Goals -->
+                <p><strong>Bio:</strong> {{ profile.bio|default:"No bio provided yet." }}</p>
+                <p><strong>Language Level:</strong> {{ profile.get_language_level_display|default:"Not specified" }}</p>
+                <p><strong>Goals:</strong> {{ profile.goals|default:"Not specified" }}</p>
+
+                <hr>
+
+                <!-- Favorites -->
+                <h5 class="favorites-header mb-2">Favorites French ...</h5>
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item"><strong>Word:</strong> {{ profile.favorite_word|default:"—" }}</li>
+                    <li class="list-group-item"><strong>Movie:</strong> {{ profile.favorite_movie|default:"—" }}</li>
+                    <li class="list-group-item"><strong>Book:</strong> {{ profile.favorite_book|default:"—" }}</li>
+                    <li class="list-group-item"><strong>Song:</strong> {{ profile.favorite_song|default:"—" }}</li>
+                </ul>
+
+                <!-- Intro Video -->
+                {% if profile.intro_video %}
+                <div class="ratio ratio-16x9 mb-3">
+                    <iframe src="{{ profile.intro_video }}" title="Intro Video" allowfullscreen></iframe>
+                </div>
+                {% endif %}
+
+                <!-- Edit Button -->
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-lg">Edit Profile</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

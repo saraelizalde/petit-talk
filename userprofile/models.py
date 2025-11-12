@@ -20,16 +20,19 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     profile_image = models.ImageField(
         upload_to='profile_pics/',
-        default='profile_pics/default.png',
+        default='images/default.png',
         blank=True,
         null=True
-        )
+    )
     favorite_word = models.CharField(max_length=100, blank=True)
     favorite_movie = models.CharField(max_length=100, blank=True)
     favorite_book = models.CharField(max_length=100, blank=True)
     favorite_song = models.CharField(max_length=100, blank=True)
-    intro_video = models.URLField(blank=True, null=True)
-    timezone = models.CharField(max_length=100, blank=True)
+    intro_video = models.FileField(
+        upload_to='profile_videos/',
+        blank=True,
+        null=True
+    )
     language_level = models.CharField(max_length=2, choices=LEVELS, blank=True)
     goals = models.TextField(blank=True)
 
