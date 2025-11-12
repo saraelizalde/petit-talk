@@ -15,10 +15,15 @@ LEVELS = [
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    is_student = models.BooleanField(default=True)
+    is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     bio = models.TextField(blank=True)
-    profile_image = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_image = models.ImageField(
+        upload_to='profile_pics/',
+        default='profile_pics/default.png',
+        blank=True,
+        null=True
+        )
     favorite_word = models.CharField(max_length=100, blank=True)
     favorite_movie = models.CharField(max_length=100, blank=True)
     favorite_book = models.CharField(max_length=100, blank=True)
@@ -39,7 +44,7 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     Automatically create or update the Profile when a User is created or saved.
     """
     if created:
-        Profile.objects.create(user=instance, is_student=True, is_teacher=False)
+        Profile.objects.create(user=instance, is_student=True)
     else:
         Profile.objects.get_or_create(user=instance) #For existing superuser
         instance.profile.save()
