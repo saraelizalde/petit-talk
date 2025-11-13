@@ -68,7 +68,7 @@
 
                             {% if user.is_authenticated %}
                             <span class="ms-2">Welcome, {{ user.username }}!</span>
-                            <a href="#" class="btn btn-outline-primary btn-sm">My Profile</a>
+                            <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">My Profile</a>
                             <a href="{% url 'account_logout' %}" class="btn btn-danger btn-sm">Logout</a>
                             {% else %}
                             <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-sm">Login</a>
@@ -87,7 +87,7 @@
                             <li class="nav-item"><a class="nav-link" href="#">Teacher Dashboard</a></li>
                             {% endif %}
                             {% endif %}
-                            <li class="nav-item"><a class="nav-link" href="#">Book a Class</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'book_lesson' %}">Book a Class</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">My Basket</a></li>
                         </ul>

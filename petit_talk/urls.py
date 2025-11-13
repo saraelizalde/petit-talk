@@ -4,8 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('admin/', admin.site.urls),
+    path("bookings/", include("bookings.urls")),
     path('profile/', include('userprofile.urls')),
     path('', include('home.urls')),
 ]

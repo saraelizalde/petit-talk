@@ -485,7 +485,7 @@ a:hover, button:hover {
 
 
 
-/* Profile Image */
+/* Profile Page */
 .profile-img {
     width: 150px;
     height: 150px;
@@ -622,13 +622,6 @@ form input:focus, form textarea:focus, form select:focus {
     max-width: 40%;
 }
 
-@media (max-width: 576px) {
-    .profile-img {
-        width: 100px;
-        height: 100px;
-    }
-}
-
 .list-group-item {
     border-left: 4px solid #0d6efd;
     padding-left: 12px;
@@ -655,9 +648,113 @@ form input:focus, form textarea:focus, form select:focus {
 
 
 
+/* Book a Lesson */
+
+/* Container styling */
+.book-lesson-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form heading */
+.book-lesson-container h2 {
+    color: var(--strong-red);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/* Form labels */
+.book-lesson-container label {
+    font-weight: 600;
+    color: #333333;
+}
+
+/* Input fields */
+.book-lesson-container input.form-control,
+.book-lesson-container select.form-select,
+.book-lesson-container textarea.form-control {
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.book-lesson-container input.form-control:focus,
+.book-lesson-container select.form-select:focus,
+.book-lesson-container textarea.form-control:focus {
+    border-color: var(--light-red);
+    box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
+}
+
+/* Buttons */
+.book-lesson-container .btn-primary {
+    background-color: var(--strong-blue);
+    border-color: var(--strong-blue);
+    border-radius: 10px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.book-lesson-container .btn-primary:hover {
+    background-color: var(--light-blue);
+    border-color: var(--light-blue);
+    transform: translateY(-2px);
+}
+
+.book-lesson-container .btn-outline-secondary {
+    border-radius: 10px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    background-color: var(--strong-red);
+    border-color: var(--strong-red);
+    color: white;
+}
+
+.book-lesson-container .btn-outline-secondary:hover {
+    background-color: var(--light-red);
+    border-color: var(--light-red);
+}
+
+/* Error messages */
+.text-danger {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 576px) {
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+    .book-lesson-container {
+        padding: 1rem;
+    }
+    .book-lesson-container .d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
 
 /* Media Query - Tablet <= 768px */
 

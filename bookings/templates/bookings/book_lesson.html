@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}Book a Class{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 book-lesson-container">
+        <h2 class="mb-4 text-center">Book a Lesson</h2>
+
+        <!-- Display messages -->
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <!-- Teacher -->
+            <div class="mb-3">
+                {{ form.teacher.label_tag }}
+                {{ form.teacher }}
+                {% if form.teacher.errors %}
+                <div class="text-danger">{{ form.teacher.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Scheduled Time -->
+            <div class="mb-3">
+                {{ form.scheduled_time.label_tag }}
+                {{ form.scheduled_time }}
+                {% if form.scheduled_time.errors %}
+                <div class="text-danger">{{ form.scheduled_time.errors }}</div>
+                {% endif %}
+            </div>
+
+            <!-- Purpose / Goal -->
+            <div class="mb-3">
+                {{ form.purpose.label_tag }}
+                {{ form.purpose }}
+                {% if form.purpose.errors %}
+                <div class="text-danger">{{ form.purpose.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <!-- Cancel button -->
+                <a href="#" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Confirm Booking</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
