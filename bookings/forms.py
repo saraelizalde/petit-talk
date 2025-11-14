@@ -1,6 +1,7 @@
 from django import forms
 from .models import Booking
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 class BookingForm(forms.ModelForm):
     scheduled_time = forms.DateTimeField(
@@ -38,6 +39,6 @@ class BookingForm(forms.ModelForm):
 
     def clean_scheduled_time(self):
         scheduled_time = self.cleaned_data['scheduled_time']
-        if scheduled_time < datetime.now() + timedelta(hours=48):
+        if scheduled_time < timezone.now() + timedelta(hours=48):
             raise forms.ValidationError("Bookings must be made at least 48 hours in advance.")
         return scheduled_time

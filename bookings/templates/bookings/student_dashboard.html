@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}My Bookings{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4 text-center">My Bookings</h2>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if bookings %}
+        <div class="table-responsive">
+            <table class="table table-striped align-middle shadow-sm rounded">
+                <thead class="table-light">
+                    <tr>
+                        <th>Teacher</th>
+                        <th>Date & Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.teacher.username }}</td>
+                        <td>{{ booking.scheduled_time|date:"Y-m-d H:i" }}</td>
+                        <td class="fw-semibold text-capitalize">{{ booking.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center text-muted mt-4">
+            You haven’t booked any lessons yet.
+        </p>
+    {% endif %}
+
+</div>
+{% endblock %}
