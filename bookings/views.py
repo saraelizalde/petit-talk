@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
@@ -80,3 +81,17 @@ def decline_booking(request, booking_id):
 
     messages.success(request, "Booking declined.")
     return redirect("teacher_dashboard")
+
+@staff_member_required
+def admin_booking_dashboard(request):
+    bookings = Booking.objects.select_related("student", "teacher").order_by("-scheduled_time")
+    return render(request, "bookings/admin_dashboard.html", {"bookings": bookings})
+
+
+@staff_member_required
+def admin_update_booking_status(request, booking_id, new_status):
+    booking = get_object_or_404(Booking, id=booking_id)
+    booking.status = new_status
+    booking.save()
+    messages.success(request, f"Booking status updated to {new_status}.")
+    return redirect("admin_booking_dashboard")

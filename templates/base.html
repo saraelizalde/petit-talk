@@ -82,12 +82,20 @@
                             <li class="nav-item"><a class="nav-link" href="#">Newsletter</a></li>
                             {% if user.is_authenticated %}
                             {% if user.profile.is_student %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'student_dashboard' %}">My Bookings</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'student_dashboard' %}">My
+                                    Bookings</a></li>
                             {% elif user.profile.is_teacher %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'teacher_dashboard' %}">Teacher Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'teacher_dashboard' %}">Teacher
+                                    Dashboard</a></li>
+                            {% endif %}
+                            {% if user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'admin_booking_dashboard' %}">Admin Dashboard</a>
+                            </li>
                             {% endif %}
                             {% endif %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'book_lesson' %}">Book a Class</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'book_lesson' %}">Book a Class</a>
+                            </li>
                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">My Basket</a></li>
                         </ul>
