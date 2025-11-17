@@ -30,7 +30,7 @@
                 <hr>
 
                 <!-- Favorites -->
-                <h5 class="favorites-header mb-2">Favorites French ...</h5>
+                <h5 class="favorites-header mb-2">Favorite French ...</h5>
                 <ul class="list-group list-group-flush mb-3">
                     <li class="list-group-item"><strong>Word:</strong> {{ profile.favorite_word|default:"—" }}</li>
                     <li class="list-group-item"><strong>Movie:</strong> {{ profile.favorite_movie|default:"—" }}</li>
@@ -46,7 +46,9 @@
                 {% endif %}
 
                 <!-- Edit Button -->
-                <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-lg">Edit Profile</a>
+                {% if profile.user == request.user and not profile.is_teacher %}
+                <a href="{% url 'edit_profile' %}" class="btn btn-warning btn-lg">Edit Profile</a>
+                {% endif %}
 
             </div>
         </div>

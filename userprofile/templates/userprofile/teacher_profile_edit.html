@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow-lg rounded-4 p-4">
+
+                <h3 class="fw-bold text-center mb-4">Edit Your Teacher Profile</h3>
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- PROFILE IMAGE -->
+                    <div class="mb-3">
+                        {{ form.profile_image.label_tag }}
+                        {{ form.profile_image }}
+                        {% for error in form.profile_image.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- BIO -->
+                    <div class="mb-3">
+                        {{ form.bio.label_tag }}
+                        {{ form.bio }}
+                        {% for error in form.bio.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- FAVORITES -->
+                    <div class="mb-3">
+                        {{ form.favorite_word.label_tag }}
+                        {{ form.favorite_word }}
+                        {% for error in form.favorite_word.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+
+                        {{ form.favorite_movie.label_tag }}
+                        {{ form.favorite_movie }}
+                        {% for error in form.favorite_movie.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+
+                        {{ form.favorite_book.label_tag }}
+                        {{ form.favorite_book }}
+                        {% for error in form.favorite_book.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+
+                        {{ form.favorite_song.label_tag }}
+                        {{ form.favorite_song }}
+                        {% for error in form.favorite_song.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- INTRO VIDEO -->
+                    {% if form.intro_video %}
+                    <div class="mb-3">
+                        {{ form.intro_video.label_tag }}
+                        {{ form.intro_video }}
+                        {% for error in form.intro_video.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

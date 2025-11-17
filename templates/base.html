@@ -65,10 +65,16 @@
                                     aria-label="Search" />
                                 <button class="btn btn-primary btn-sm" type="submit">Search</button>
                             </form>
-
                             {% if user.is_authenticated %}
                             <span class="ms-2">Welcome, {{ user.username }}!</span>
+
+                            {% if user.profile.is_teacher %}
+                            <a href="{% url 'teacher_profile' user.id %}" class="btn btn-outline-primary btn-sm">My
+                                Profile</a>
+                            {% else %}
                             <a href="{% url 'profile' %}" class="btn btn-outline-primary btn-sm">My Profile</a>
+                            {% endif %}
+
                             <a href="{% url 'account_logout' %}" class="btn btn-danger btn-sm">Logout</a>
                             {% else %}
                             <a href="{% url 'account_login' %}" class="btn btn-outline-primary btn-sm">Login</a>

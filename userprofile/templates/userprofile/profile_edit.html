@@ -12,17 +12,26 @@
                     <!-- Current Profile Image Preview -->
                     {% if user.profile.profile_image %}
                     <div class="text-center mb-3">
-                        <img src="{{ user.profile.profile_image.url }}" 
-                             class="img-fluid rounded-circle edit-profile-img" 
-                             alt="{{ user.username }}">
+                        <img src="{{ user.profile.profile_image.url }}"
+                            class="img-fluid rounded-circle edit-profile-img" alt="{{ user.username }}">
+                    </div>
+                    {% endif %}
+
+                    <!-- Current Intro Video Preview for Teachers -->
+                    {% if user.profile.is_teacher and user.profile.intro_video %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Current Intro Video</label>
+                        <video controls class="w-100 rounded">
+                            <source src="{{ user.profile.intro_video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                     {% endif %}
 
                     <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         {% csrf_token %}
                         {{ form.as_p }}
-
-                        <div class="text-end mt-3">
+                          <div class="text-end mt-3">
                             <a href="{% url 'profile' %}" class="btn btn-outline-danger me-2">Cancel</a>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>

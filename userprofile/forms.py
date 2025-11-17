@@ -20,8 +20,19 @@ class ProfileForm(forms.ModelForm):
             'language_level': forms.Select(attrs={'class': 'form-select'}),
         }
 
-class TeacherProfileForm(ProfileForm):
-    class Meta(ProfileForm.Meta):
-        fields = ProfileForm.Meta.fields + ['intro_video']
-        widgets = {**ProfileForm.Meta.widgets,
-                   'intro_video': forms.ClearableFileInput(attrs={'class': 'form-control'})}
+class TeacherProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            'profile_image',
+            'bio',
+            'favorite_word',
+            'favorite_movie',
+            'favorite_book',
+            'favorite_song',
+            'intro_video',
+        ]
+        widgets = {
+            'bio': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+            'intro_video': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
