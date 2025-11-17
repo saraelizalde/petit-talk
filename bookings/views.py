@@ -84,8 +84,8 @@ def confirm_booking(request, booking_id):
     booking.status = "confirmed"
     booking.save()
 
-    messages.success(request, "Booking confirmed successfully.")
-    return redirect("teacher_dashboard")
+    messages.success(request, "Your booking is created and added to your bag.")
+    return redirect("view_bag")
 
 
 @login_required

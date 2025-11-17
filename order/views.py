@@ -1,3 +1,51 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Order, CLASS_PRICE_EUR
+from bookings.models import Booking
+from django.db import transaction
 
-# Create your views here.
+@login_required
+def view_bag(request):
+    """Show student's unpaid / pending bookings."""
+    bag_bookings = Booking.objects.filter(student=request.user, status='PENDING').order_by('scheduled_time')
+    total = CLASS_PRICE_EUR * bag_bookings.count()
+    return render(request, "order/bag.html", {"bookings": bag_bookings, "total": total, "price_per": CLASS_PRICE_EUR})
+
+@login_required
+def remove_from_bag(request, booking_id):
+    """Remove booking from bag."""
+    booking = get_object_or_404(Booking, id=booking_id, student=request.user)
+    if booking.status != 'PENDING':
+        messages.error(request, "Only unpaid/pending bookings can be removed from bag.")
+        return redirect('view_bag')
+
+    booking.delete()
+
+    messages.success(request, "Booking removed from your bag.")
+    return redirect('view_bag')
+
+@login_required
+@transaction.atomic
+def create_order(request):
+    bag_bookings = Booking.objects.filter(student=request.user, status='PENDING')
+    if not bag_bookings.exists():
+        messages.error(request, "There are no items in your bag.")
+        return redirect('view_bag')
+
+    order = Order.objects.create(student=request.user)
+    order.bookings.set(bag_bookings)
+    order.calculate_total()
+    order.save()
+
+    # Temporary logic to simulate payment
+    for b in bag_bookings:
+        b.status = 'PAID'
+        b.save()
+
+    order.paid = True
+    order.save()
+
+    messages.success(request, "Payment simulated — order created and bookings marked as paid.")
+    return redirect('student_dashboard')
+
