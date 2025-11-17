@@ -107,11 +107,17 @@ def admin_booking_dashboard(request):
     bookings = Booking.objects.select_related("student", "teacher").order_by("-scheduled_time")
     return render(request, "bookings/admin_dashboard.html", {"bookings": bookings})
 
-
 @staff_member_required
 def admin_update_booking_status(request, booking_id, new_status):
     booking = get_object_or_404(Booking, id=booking_id)
     booking.status = new_status
     booking.save()
     messages.success(request, f"Booking status updated to {new_status}.")
+    return redirect("admin_booking_dashboard")
+
+@staff_member_required
+def admin_delete_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    booking.delete()
+    messages.success(request, "Booking deleted.")
     return redirect("admin_booking_dashboard")

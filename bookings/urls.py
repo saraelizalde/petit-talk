@@ -11,4 +11,5 @@ urlpatterns = [
     path("admin/update-status/<int:booking_id>/<str:new_status>/",
          views.admin_update_booking_status,
          name="admin_update_booking_status"),
+    path("admin/bookings/delete/<int:booking_id>/", views.admin_delete_booking, name="admin_delete_booking"),
 ]
