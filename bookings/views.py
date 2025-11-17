@@ -40,8 +40,28 @@ def book_lesson(request):
 
 @login_required
 def student_dashboard(request):
-    bookings = Booking.objects.filter(student=request.user).order_by("-created_at")
-    return render(request, "bookings/student_dashboard.html", {"bookings": bookings})
+    filter_option = request.GET.get("filter", "all")
+    now = timezone.now()
+
+    bookings = Booking.objects.filter(student=request.user)
+
+    if filter_option == "upcoming":
+        bookings = bookings.filter(scheduled_time__gte=now).order_by("scheduled_time")
+
+    elif filter_option == "past":
+        bookings = bookings.filter(scheduled_time__lt=now).order_by("-scheduled_time")
+
+    else:
+        bookings = bookings.order_by("scheduled_time")
+
+    return render(
+        request,
+        "bookings/student_dashboard.html",
+        {
+            "bookings": bookings,
+            "filter": filter_option
+        }
+    )
 
 
 @login_required

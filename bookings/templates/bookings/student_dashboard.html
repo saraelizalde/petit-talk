@@ -14,6 +14,24 @@
         {% endfor %}
     {% endif %}
 
+    <!-- Filtering Buttons -->
+    <div class="d-flex justify-content-center mb-4 gap-2">
+        <a href="?filter=upcoming"
+           class="btn btn-outline-primary {% if filter == 'upcoming' %}active{% endif %}">
+            Upcoming
+        </a>
+
+        <a href="?filter=past"
+           class="btn btn-outline-primary {% if filter == 'past' %}active{% endif %}">
+            Past
+        </a>
+
+        <a href="?filter=all"
+           class="btn btn-outline-primary {% if filter == 'all' or not filter %}active{% endif %}">
+            All
+        </a>
+    </div>
+
     {% if bookings %}
         <div class="table-responsive">
             <table class="table table-striped align-middle shadow-sm rounded">
@@ -30,7 +48,18 @@
                     <tr>
                         <td>{{ booking.teacher.username }}</td>
                         <td>{{ booking.scheduled_time|date:"Y-m-d H:i" }}</td>
-                        <td class="fw-semibold text-capitalize">{{ booking.status }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if booking.status == 'confirmed' %} bg-success 
+                                {% elif booking.status == 'pending' %} bg-warning text-dark
+                                {% elif booking.status == 'cancelled' %} bg-danger
+                                {% elif booking.status == 'paid' %} bg-primary
+                                {% elif booking.status == 'unpaid' %} bg-secondary
+                                {% else %} bg-light text-dark {% endif %}
+                            ">
+                                {{ booking.status|capfirst }}
+                            </span>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
