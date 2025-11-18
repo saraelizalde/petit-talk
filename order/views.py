@@ -8,9 +8,17 @@ from django.db import transaction
 @login_required
 def view_bag(request):
     """Show student's unpaid / pending bookings."""
-    bag_bookings = Booking.objects.filter(student=request.user, status='PENDING').order_by('scheduled_time')
-    total = CLASS_PRICE_EUR * bag_bookings.count()
-    return render(request, "order/bag.html", {"bookings": bag_bookings, "total": total, "price_per": CLASS_PRICE_EUR})
+    order = Order.get_or_create_basket(request.user)
+    bag_bookings = Booking.objects.filter(student=request.user, status='PENDING')
+    order.bookings.set(bag_bookings)
+    order.refresh_total()
+
+    return render(request, "orders/bag.html", {
+        "order": order,
+        "bookings": bag_bookings,
+        "price_per": CLASS_PRICE_EUR,
+        "total": order.total_eur,
+    })
 
 @login_required
 def remove_from_bag(request, booking_id):
@@ -25,27 +33,19 @@ def remove_from_bag(request, booking_id):
     messages.success(request, "Booking removed from your bag.")
     return redirect('view_bag')
 
-@login_required
-@transaction.atomic
-def create_order(request):
-    bag_bookings = Booking.objects.filter(student=request.user, status='PENDING')
-    if not bag_bookings.exists():
-        messages.error(request, "There are no items in your bag.")
-        return redirect('view_bag')
+#@login_required
+#@transaction.atomic
+#def create_order(request):
+    #bag_bookings = Booking.objects.filter(student=request.user, status='PENDING')
+    #if not bag_bookings.exists():
+        #messages.error(request, "There are no items in your bag.")
+        #return redirect('view_bag')
 
-    order = Order.objects.create(student=request.user)
-    order.bookings.set(bag_bookings)
-    order.calculate_total()
-    order.save()
+    #order = Order.objects.create(student=request.user)
+    #order.bookings.set(bag_bookings)
+    #order.calculate_total()
+    #order.save()
 
-    # Temporary logic to simulate payment
-    for b in bag_bookings:
-        b.status = 'PAID'
-        b.save()
+    #return redirect("create_checkout_session", order_id=order.id)
 
-    order.paid = True
-    order.save()
-
-    messages.success(request, "Payment simulated — order created and bookings marked as paid.")
-    return redirect('student_dashboard')
 

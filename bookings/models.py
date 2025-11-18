@@ -4,6 +4,8 @@ from django.utils import timezone
 from datetime import timedelta
 
 BOOKING_STATUS = [
+    ('unpaid', 'Unpaid'),
+    ('paid', 'Paid'),
     ('PENDING', 'Pending'),
     ('CONFIRMED', 'Confirmed'),
     ('CANCELLED', 'Cancelled'),
