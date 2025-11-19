@@ -1,0 +1,1 @@
+web: gunicorn petit_talk.wsgi:application
