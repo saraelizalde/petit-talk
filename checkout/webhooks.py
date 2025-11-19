@@ -8,7 +8,7 @@ endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
 def stripe_webhook(request):
     payload = request.body
-    sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
 
     try:
         event = stripe.Webhook.construct_event(
@@ -17,11 +17,18 @@ def stripe_webhook(request):
     except Exception:
         return HttpResponse(status=400)
 
-    if event["type"] == "payment_intent.completed":
+    if event["type"] == "payment_intent.succeeded":
         intent = event["data"]["object"]
-        order_id = intent["metadata"]["order_id"]
-
-        order = Order.objects.get(id=order_id)
+        
+        order_id = intent["metadata"].get("order_id")
+        if not order_id:
+            return HttpResponse(status=400)
+        
+        try:
+            order = Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return HttpResponse(status=404)
+        
         order.paid = True
         order.save()
 
