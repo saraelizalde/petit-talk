@@ -1,7 +1,7 @@
 import stripe
 from django.conf import settings
 from django.http import HttpResponse
-from orders.models import Order
+from order.models import Order
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = settings.STRIPE_WEBHOOK_SECRET

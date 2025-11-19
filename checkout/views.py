@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 import stripe
 from django.conf import settings
-from orders.models import Order
+from order.models import Order
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -32,4 +32,10 @@ def create_checkout_session(request, order_id):
     order.save()
 
     return redirect(session.url)
+
+def success(request):
+    return render(request, "checkout/checkout_success.html")
+
+def error(request):
+    return render(request, "checkout/checkout_error.html")
 
