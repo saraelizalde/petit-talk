@@ -13,7 +13,7 @@ def view_bag(request):
     order.bookings.set(bag_bookings)
     order.refresh_total()
 
-    return render(request, "orders/bag.html", {
+    return render(request, "order/bag.html", {
         "order": order,
         "bookings": bag_bookings,
         "price_per": CLASS_PRICE_EUR,

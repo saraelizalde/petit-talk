@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="text-center mb-5">
+    <div class="container">
+        <div class="card book-lesson-container mx-auto" style="max-width: 500px;">
+            <h2 class="mb-3 text-danger">Payment Failed</h2>
+            <p class="mb-4">Unfortunately, your payment could not be processed.</p>
+            <p>Please try again or contact support if the problem persists.</p>
+            <a href="{% url 'book_lesson' %}" class="btn btn-outline-secondary mt-3">Try Again</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 import stripe
 from django.conf import settings
 from order.models import Order
+from django.urls import reverse
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -23,8 +24,8 @@ def create_checkout_session(request, order_id):
             }
         ],
         metadata={"order_id": order.id},
-        success_url=request.build_absolute_uri("/checkout/success/"),
-        cancel_url=request.build_absolute_uri("/checkout/error/"),
+        success_url=request.build_absolute_uri(reverse("checkout_success")),
+        cancel_url=request.build_absolute_uri(reverse("checkout_error")),
     )
 
     order.stripe_payment_intent = session.payment_intent
@@ -34,8 +35,8 @@ def create_checkout_session(request, order_id):
     return redirect(session.url)
 
 def success(request):
-    return render(request, "checkout/checkout_success.html")
+    return render(request, "checkout/success.html")
 
 def error(request):
-    return render(request, "checkout/checkout_error.html")
+    return render(request, "checkout/error.html")
 
