@@ -19,21 +19,34 @@ def stripe_webhook(request):
 
     if event["type"] == "checkout.session.completed":
         intent = event["data"]["object"]
-        
         order_id = intent["metadata"].get("order_id")
-        if not order_id:
-            return HttpResponse(status=400)
-        
-        try:
-            order = Order.objects.get(id=order_id)
-        except Order.DoesNotExist:
-            return HttpResponse(status=404)
-        
-        order.paid = True
-        order.save()
+        return mark_order_as_paid(order_id)
 
-        for b in order.bookings.all():
-            b.status = "paid"
-            b.save()
+    if event["type"] == "payment_intent.succeeded":
+        intent = event["data"]["object"]
+        
+        sessions = stripe.checkout.Session.list(payment_intent=intent["id"])
+        if sessions and sessions.data:
+            session = sessions.data[0]
+            order_id = session["metadata"].get("order_id")
+            return mark_order_as_paid(order_id)
+        
+    return HttpResponse(status=200)
+        
+def mark_order_as_paid(order_id):
+    if not order_id:
+        return HttpResponse(status=400)
+        
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        return HttpResponse(status=404)
+        
+    order.paid = True
+    order.save()
+
+    for b in order.bookings.all():
+        b.status = "paid"
+        b.save()
 
     return HttpResponse(status=200)
