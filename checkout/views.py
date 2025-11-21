@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 import stripe
+from django.contrib import messages
 from django.conf import settings
 from order.models import Order
 from django.urls import reverse
@@ -9,6 +10,14 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def create_checkout_session(request, order_id):
     order = get_object_or_404(Order, id=order_id, student=request.user)
 
+    pending_bookings = order.bookings.filter(status="PENDING")
+
+    if not pending_bookings.exists():
+        messages.error(request, "There are no unpaid bookings in this order.")
+        return redirect("view_bag")
+    
+    total_amount = int(order.total_eur * 100)
+    
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
         mode="payment",
@@ -18,7 +27,7 @@ def create_checkout_session(request, order_id):
                 "price_data": {
                     "currency": "eur",
                     "unit_amount": int(order.total_eur * 100),
-                    "product_data": {"name": f"{order.bookings.count()} Lessons"},
+                    "product_data": {"name": f"{pending_bookings.count()} Lessons"},
                 },
                 "quantity": 1,
             }

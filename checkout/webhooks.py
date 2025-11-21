@@ -17,7 +17,7 @@ def stripe_webhook(request):
     except Exception:
         return HttpResponse(status=400)
 
-    if event["type"] == "payment_intent.succeeded":
+    if event["type"] == "checkout.session.completed":
         intent = event["data"]["object"]
         
         order_id = intent["metadata"].get("order_id")
@@ -33,7 +33,7 @@ def stripe_webhook(request):
         order.save()
 
         for b in order.bookings.all():
-            b.status = "PAID"
+            b.status = "paid"
             b.save()
 
     return HttpResponse(status=200)
