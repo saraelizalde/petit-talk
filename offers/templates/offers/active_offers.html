@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Active Offers</h2>
+<ul>
+    {% for offer in offers %}
+    <li>
+        <strong>{{ offer.name }}</strong> - 
+        {% if offer.discount_type == 'percentage' %}
+            {{ offer.discount_value }}% off
+        {% elif offer.discount_type == 'fixed_amount' %}
+            €{{ offer.discount_value }} off
+        {% else %}
+            Bundle offer
+        {% endif %}
+    </li>
+    {% empty %}
+    <li>No active offers at the moment.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
