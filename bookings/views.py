@@ -13,25 +13,19 @@ from userprofile.models import Profile
 def book_lesson(request):
     if request.method == "POST":
         form = BookingForm(request.POST, user=request.user)
+
         if form.is_valid():
             booking = form.save(commit=False)
             booking.student = request.user
-            teacher = booking.teacher
-            existing = Booking.objects.filter(
-                teacher=teacher,
-                scheduled_time=booking.scheduled_time,
-                status__in=["pending", "confirmed"]
-            ).exists()
+            booking.scheduled_time = form.cleaned_data["scheduled_time"]
+            booking.save()
 
-            if existing:
-                messages.error(request, "This time slot is already booked. Please choose another.")
-            else:
-                booking.save()
-                messages.success(
-                    request,
-                    f"Your booking with {teacher.username} is confirmed for {booking.scheduled_time.strftime('%Y-%m-%d %H:%M')}."
-                )
-                return redirect("student_dashboard")
+            messages.success(
+                request,
+                f"Your booking with {booking.teacher.username} is confirmed for "
+                f"{booking.scheduled_time.strftime('%Y-%m-%d %H:%M')}."
+            )    
+            return redirect("student_dashboard")
     else:
         form = BookingForm(user=request.user)
 
