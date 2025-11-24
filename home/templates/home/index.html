@@ -71,17 +71,31 @@
     <section class="mb-5">
         <h2 class="text-center mb-4">Our Offers</h2>
         <div class="row g-4 justify-content-center">
+
             <!-- Offer 1 -->
+            <!-- Dynamic Active Offer -->
+            {% if active_offer %}
             <div class="col-md-4">
                 <div class="offer-card card border-0 shadow-sm text-center h-100">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="card-img-top" alt="Offer 1">
+                    {% if active_offer.image %}
+                    <img src="{{ active_offer.image.url }}" class="card-img-top" alt="{{ active_offer.name }}">
+                    {% endif %}
                     <div class="card-body">
-                        <h5 class="card-title">Offer One</h5>
-                        <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
-                            ab quaerat magni omnis beatae quibusdam?</p>
+                        <h5 class="card-title">{{ active_offer.name }}</h5>
+                        <p class="card-text text-muted">{{ active_offer.description }}</p>
+                        <p class="fw-bold mt-2">
+                            {% if active_offer.discount_type == "percentage" %}
+                            -{{ active_offer.discount_value|floatformat:0 }}%
+                            {% elif active_offer.discount_type == "fixed_amount" %}
+                            {{ active_offer.discount_value|floatformat:2 }} EUROS
+                            {% else %}
+                            Special Bundle
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>
+            {% endif %}
 
             <!-- Offer 2 -->
             <div class="col-md-4">
