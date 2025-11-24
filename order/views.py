@@ -11,13 +11,23 @@ def view_bag(request):
     order = Order.get_or_create_basket(request.user)
     bag_bookings = Booking.objects.filter(student=request.user, status='PENDING')
     order.bookings.set(bag_bookings)
-    order.refresh_total()
+    if not bag_bookings.exists():
+        order.offer = None
+        order.subtotal = 0
+        order.total_eur = 0
+        order.save(update_fields=['offer', 'subtotal', 'total_eur'])
+        discount = 0
+    else:
+        order.auto_apply_offer()
+        order.refresh_total()
+        discount = order.subtotal - order.total_eur
 
     return render(request, "order/bag.html", {
         "order": order,
         "bookings": bag_bookings,
         "price_per": CLASS_PRICE_EUR,
         "total": order.total_eur,
+        "discount": discount,
     })
 
 @login_required

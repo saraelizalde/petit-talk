@@ -26,7 +26,6 @@
             <div class="small mt-1">{{ b.purpose }}</div>
             {% endif %}
           </div>
-
           <div class="text-end">
             <div class="mb-2">€{{ price_per }}</div>
             <a href="{% url 'remove_from_bag' b.id %}" class="btn btn-outline-danger btn-sm">Remove</a>
@@ -35,18 +34,53 @@
         {% endfor %}
       </div>
 
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="fs-5">Total: <strong>€{{ total }}</strong></div>
-        <div>
-          <a href="{% url 'student_dashboard' %}" class="btn btn-outline-secondary me-2">Back</a>
-          <a href="{% url 'create_checkout_session' order.id %}" class="btn btn-primary">
-            Checkout — Pay €{{ order.total_eur }}
-          </a>
+      <div class="card p-3 shadow-sm mb-3">
+        <h5 class="mb-3">Order Summary</h5>
+
+        <p class="d-flex justify-content-between">
+          <span>Subtotal:</span>
+          <strong>€{{ order.subtotal|floatformat:2 }}</strong>
+        </p>
+
+        {% if order.offer %}
+        <div class="alert alert-success py-2">
+          <strong>Offer Applied:</strong> {{ order.offer.name }} <br>
+          <small class="text-muted">
+            Type: {{ order.offer.discount_type|title }} —
+            Value:
+            {% if order.offer.discount_type == "percentage" %}
+            {{ order.offer.discount_value|floatformat:0 }}%
+            {% elif order.offer.discount_type == "fixed_amount" %}
+            €{{ order.offer.discount_value|floatformat:2 }}
+            {% else %}
+            Bundle Offer
+            {% endif %}
+          </small>
+        </div>
+
+        <p class="d-flex justify-content-between text-success fw-bold">
+          <span>Discount:</span>
+          <span>- €{{ discount|floatformat:2 }}</span>
+        </p>
+        {% endif %}
+
+        <hr>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="fs-5">Total: <strong>€{{ order.total_eur|floatformat:2 }}</strong></div>
+          <div>
+            <a href="{% url 'student_dashboard' %}" class="btn btn-outline-secondary me-2">Back</a>
+            <a href="{% url 'create_checkout_session' order.id %}" class="btn btn-primary">
+              Checkout — Pay €{{ order.total_eur|floatformat:2 }}
+            </a>
+          </div>
         </div>
       </div>
+
       {% else %}
       <p class="text-center text-muted">Your bag is empty. Add bookings from the booking form.</p>
       {% endif %}
+
     </div>
   </div>
 </div>

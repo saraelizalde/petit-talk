@@ -29,4 +29,14 @@ class Offer(models.Model):
         """Return True if the offer is active."""
         return self.active
 
+    def apply_discount(self, subtotal):
+        """Return discounted total based on offer type."""
+        if self.discount_type == 'percentage':
+            return subtotal - (subtotal * (self.discount_value / 100))
+        if self.discount_type == 'fixed_amount':
+            return max(subtotal - self.discount_value, 0)
+        #if self.discount_type == 'bundle':
+            #return subtotal  
+        return subtotal
+
 
