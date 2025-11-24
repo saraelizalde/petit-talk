@@ -84,19 +84,25 @@
 
                         <!-- Bottom section buttons -->
                         <ul class="navbar-nav justify-content-end flex-wrap">
-                            <li class="nav-item"><a class="nav-link" href="#">Offers</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/#offers-section">Offers</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">Newsletter</a></li>
                             {% if user.is_authenticated %}
+                            <!--Students-->
                             {% if user.profile.is_student %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'student_dashboard' %}">My
                                     Bookings</a></li>
+                            <!--Teacher-->
                             {% elif user.profile.is_teacher %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'teacher_dashboard' %}">Teacher
                                     Dashboard</a></li>
                             {% endif %}
+                            <!--Admin-->
                             {% if user.is_staff %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'admin_booking_dashboard' %}">Admin Dashboard</a>
+                                <a class="nav-link" href="{% url 'admin_booking_dashboard' %}">Booking Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'offers:admin_offers' %}">Manage Offers</a>
                             </li>
                             {% endif %}
                             {% endif %}
