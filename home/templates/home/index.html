@@ -25,46 +25,44 @@
     <!-- Teachers Carousel -->
     <section class="mb-5">
         <h2 class="text-center mb-4">Meet Our Teachers</h2>
+
+        {% if teachers %}
         <div id="teachersCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-
-                <!-- Teacher 1 -->
-                <div class="carousel-item active text-center">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Teacher 1"
-                        width="120" height="120">
-                    <h5>Teacher One</h5>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, labore.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">View Profile</a>
+                {% for teacher in teachers %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %} text-center">
+                    {% if teacher.profile_image %}
+                    <img src="{{ teacher.profile_image.url }}" class="rounded-circle mb-3"
+                        alt="{{ teacher.user.get_full_name }}" width="120" height="120">
+                    {% else %}
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3"
+                        alt="Teacher image" width="120" height="120">
+                    {% endif %}
+                    <h5>{{ teacher.user.get_full_name|default:teacher.user.username }}</h5>
+                    <p class="text-muted">
+                        {{ teacher.bio|truncatewords:20 }}
+                    </p>
+                    <a href="{% url 'teacher_profile' teacher.user.id %}" class="btn btn-outline-primary btn-sm">
+                        View Profile
+                    </a>
                 </div>
-
-                <!-- Teacher 2 -->
-                <div class="carousel-item text-center">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Teacher 2"
-                        width="120" height="120">
-                    <h5>Teacher Two</h5>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, labore.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">View Profile</a>
-                </div>
-
-                <!-- Teacher 3 -->
-                <div class="carousel-item text-center">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Teacher 3"
-                        width="120" height="120">
-                    <h5>Teacher Three</h5>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, labore.</p>
-                    <a href="#" class="btn btn-outline-primary btn-sm">View Profile</a>
-                </div>
+                {% endfor %}
             </div>
 
             <button class="carousel-control-prev" type="button" data-bs-target="#teachersCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
+
             <button class="carousel-control-next" type="button" data-bs-target="#teachersCarousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon"></span>
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+
+        {% else %}
+        <p class="text-center text-muted">No teachers available yet.</p>
+        {% endif %}
     </section>
 
     <!-- Offers Section -->
