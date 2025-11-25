@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Teacher Dashboard</h2>
+
+<h3>Existing Teachers</h3>
+<div class="row">
+    {% for profile in teachers %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{{ profile.user.get_full_name }}</h5>
+                <p>{{ profile.user.email }}</p>
+                <p>Status: {{ profile.user.is_active|yesno:"Active,Inactive" }}</p>
+                <a href="{% url 'admin_edit_teacher' profile.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="{% url 'admin_delete_teacher' profile.pk %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No teachers found.</p>
+    {% endfor %}
+</div>
+
+<h3>Add New Teacher</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Create Teacher</button>
+</form>
+
+<hr>
+
+{% endblock %}
