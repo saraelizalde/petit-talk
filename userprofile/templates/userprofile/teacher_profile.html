@@ -10,20 +10,18 @@
 
                 <!-- Profile Image -->
                 {% if profile.profile_image %}
-                    <img src="{{ profile.profile_image.url }}" class="profile-img mb-3"
-                         alt="{{ profile.user.username }}">
+                <img src="{{ profile.profile_image.url }}" class="profile-img mb-3" alt="{{ profile.user.username }}">
                 {% else %}
-                    <img src="{% static 'images/default_profile.png' %}" class="profile-img mb-3"
-                         alt="Default Profile">
+                <img src="{% static 'images/default_profile.png' %}" class="profile-img mb-3" alt="Default Profile">
                 {% endif %}
 
                 <!-- Username & Badge -->
                 <h3 class="fw-bold mb-1">{{ profile.user.username }}</h3>
 
                 {% if profile.is_teacher %}
-                    <span class="badge badge-teacher mb-2">Teacher</span>
+                <span class="badge badge-teacher mb-2">Teacher</span>
                 {% else %}
-                    <span class="badge badge-student mb-2">Student</span>
+                <span class="badge badge-student mb-2">Student</span>
                 {% endif %}
 
                 <p class="text-muted mb-3">
@@ -43,27 +41,27 @@
                 {% endif %}
 
                 <!-- Favorites -->
-                {% if profile.favorite_word or profile.favorite_movie or profile.favorite_book or profile.favorite_song %}
-                    <h5 class="favorites-header mb-3">Favorite French ...</h5>
-                    <ul class="list-group list-group-flush mb-4">
-                        {% if profile.favorite_word %}
-                        <li class="list-group-item"><strong>Word:</strong> {{ profile.favorite_word }}</li>
-                        {% endif %}
-                        {% if profile.favorite_movie %}
-                        <li class="list-group-item"><strong>Movie:</strong> {{ profile.favorite_movie }}</li>
-                        {% endif %}
-                        {% if profile.favorite_book %}
-                        <li class="list-group-item"><strong>Book:</strong> {{ profile.favorite_book }}</li>
-                        {% endif %}
-                        {% if profile.favorite_song %}
-                        <li class="list-group-item"><strong>Song:</strong> {{ profile.favorite_song }}</li>
-                        {% endif %}
-                    </ul>
-                {% endif %}
+                <h5 class="favorites-header mb-3">Favorite French ...</h5>
+                <ul class="list-group list-group-flush mb-4">
+                    {% if profile.favorite_word %}
+                    <li class="list-group-item"><strong>Word:</strong> {{ profile.favorite_word }}</li>
+                    {% endif %}
+                    {% if profile.favorite_movie %}
+                    <li class="list-group-item"><strong>Movie:</strong> {{ profile.favorite_movie }}</li>
+                    {% endif %}
+                    {% if profile.favorite_book %}
+                    <li class="list-group-item"><strong>Book:</strong> {{ profile.favorite_book }}</li>
+                    {% endif %}
+                    {% if profile.favorite_song %}
+                    <li class="list-group-item"><strong>Song:</strong> {{ profile.favorite_song }}</li>
+                    {% endif %}
+                </ul>
 
                 <!-- Buttons -->
                 <div class="d-flex flex-column gap-2 mt-3">
-                    <a href="#" class="btn btn-primary">Book a Class</a>
+                    <a href="{% url 'book_lesson' %}?teacher={{ profile.user.id }}" class="btn btn-primary">
+                        Book a Class
+                    </a>
 
                     {% if request.user == profile.user and profile.is_teacher %}
                     <a href="{% url 'teacher_profile_edit' %}" class="btn btn-outline-primary">

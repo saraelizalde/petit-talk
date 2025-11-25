@@ -11,6 +11,8 @@ from userprofile.models import Profile
 
 @login_required
 def book_lesson(request):
+    teacher_id = request.GET.get("teacher")
+    
     if request.method == "POST":
         form = BookingForm(request.POST, user=request.user)
 
@@ -28,6 +30,9 @@ def book_lesson(request):
             return redirect("student_dashboard")
     else:
         form = BookingForm(user=request.user)
+
+        if teacher_id:
+            form.fields["teacher"].initial = teacher_id
 
     return render(request, "bookings/book_lesson.html", {"form": form})
 
