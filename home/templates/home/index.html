@@ -125,13 +125,21 @@
     <section class="bg-light p-5 rounded mb-5 text-center">
         <h2>Join Our Newsletter</h2>
         <p>Get updates about new teachers, language tips, and offers straight to your inbox.</p>
-        <form method="post" action="#">
+        <form action="{% url 'newsletter:subscribe' %}" method="POST" class="newsletter-form mt-3">
             {% csrf_token %}
-            <div class="input-group justify-content-center mt-3">
-                <input type="email" name="email" class="form-control w-50" placeholder="Enter your email" required>
-                <button class="btn btn-primary" type="submit">Subscribe</button>
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <input type="text" name="first_name" class="form-control" placeholder="First name (optional)">
+                </div>
+                <div class="col-md-5">
+                    <input type="email" name="email" required class="form-control" placeholder="Your email address">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100" type="submit">Subscribe</button>
+                </div>
             </div>
         </form>
+
     </section>
 
     <!-- Comments / Testimonials Section -->
