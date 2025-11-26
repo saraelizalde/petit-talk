@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("bookings/", include("bookings.urls")),
     path("checkout/", include("checkout.urls")),
+    path("comments/", include("comments.urls")),
     path("newsletter/", include("newsletter.urls")),
     path("offers/", include("offers.urls", namespace="offers")),
     path('order/', include('order.urls')),
@@ -17,3 +18,4 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

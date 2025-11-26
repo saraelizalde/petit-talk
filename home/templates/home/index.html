@@ -145,44 +145,27 @@
     <!-- Comments / Testimonials Section -->
     <section class="mb-5">
         <h2 class="text-center mb-4">What Our Students Say</h2>
+
+        {% if comments %}
         <div id="commentsCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
 
-                <!-- Comment 1 -->
-                <div class="carousel-item active text-center">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Student 1"
-                        width="80" height="80">
-                    <blockquote class="blockquote">
-                        <p>"Petit Talk made me fall in love with learning again! My teacher is amazing."</p>
-                    </blockquote>
-                    <footer class="blockquote-footer">
-                        <a href="#" class="text-decoration-none">Sophie L.</a>
-                    </footer>
-                </div>
+                {% for comment in comments %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %} text-center">
 
-                <!-- Comment 2 -->
-                <div class="carousel-item text-center">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Student 2"
-                        width="80" height="80">
-                    <blockquote class="blockquote">
-                        <p>"The sessions are so friendly and flexible. I improved my French conversation a lot!"</p>
-                    </blockquote>
-                    <footer class="blockquote-footer">
-                        <a href="#" class="text-decoration-none">Mark R.</a>
-                    </footer>
-                </div>
+                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" width="80"
+                        height="80">
 
-                <!-- Comment 3 -->
-                <div class="carousel-item text-center">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" alt="Student 3"
-                        width="80" height="80">
                     <blockquote class="blockquote">
-                        <p>"I love being able to chat with real teachers from different countries."</p>
+                        <p>"{{ comment.content }}"</p>
                     </blockquote>
                     <footer class="blockquote-footer">
-                        <a href="#" class="text-decoration-none">Hannah T.</a>
+                        <span class="text-decoration-none">{{ comment.user.username }}</span>
                     </footer>
+
                 </div>
+                {% endfor %}
+
             </div>
 
             <button class="carousel-control-prev" type="button" data-bs-target="#commentsCarousel" data-bs-slide="prev">
@@ -194,19 +177,24 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
+        {% else %}
+        <p class="text-center text-muted">No comments yet.</p>
+        {% endif %}
     </section>
 
+    <!-- Add a comment -->
     <section class="add-comment container my-5">
         <h3 class="text-center mb-4">Share your experience</h3>
-        <form>
-            <div class="mb-3">
-                <textarea class="form-control" placeholder="Write your comment here..." required></textarea>
-            </div>
-            <div class="text-center">
+
+        <form method="POST" action="{% url 'submit_comment' %}">
+            {% csrf_token %}
+            {{ form.content }}
+            <div class="text-center mt-3">
                 <button type="submit" class="btn btn-primary">Submit Comment</button>
             </div>
         </form>
     </section>
+
 
 
 </div>
