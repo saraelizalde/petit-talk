@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+
+    <h1 class="mb-4 text-center" style="color: var(--dark-blue); font-family: var(--secondary-font);">
+        Manage Comments
+    </h1>
+
+    <div class="card p-4 shadow-sm" style="border-radius: 12px; background-color: #fff;">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr style="color: var(--strong-blue); font-weight: 600;">
+                        <th>User</th>
+                        <th>Comment</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for comment in comments %}
+                    <tr class="bg-light" style="border-radius: 8px;">
+                        <td>
+                            <a href="{% url 'profile_detail' comment.user.id %}"
+                               class="text-decoration-none"
+                               style="color: var(--strong-red); font-weight: 600;">
+                                {{ comment.user.username }}
+                            </a>
+                        </td>
+
+                        <td style="max-width: 350px;">
+                            {{ comment.content|truncatewords:20 }}
+                        </td>
+
+                        <td>{{ comment.created_at|date:"M d, Y H:i" }}</td>
+
+                        <td>
+                            {% if comment.is_approved %}
+                            <span class="badge bg-success">Approved</span>
+                            {% else %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+
+                            {% if not comment.is_approved %}
+                            <a href="{% url 'approve_comment' comment.id %}"
+                               class="btn btn-primary btn-sm me-2"
+                               style="border-radius: 20px;">
+                                Approve
+                            </a>
+                            {% endif %}
+
+                            <a href="{% url 'delete_comment' comment.id %}"
+                               class="btn btn-danger btn-sm"
+                               style="border-radius: 20px;"
+                               onclick="return confirm('Are you sure you want to delete this comment?');">
+                                Delete
+                            </a>
+
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            No comments yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
