@@ -47,7 +47,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <div class="container-fluid">
                 <!-- Logo on the left -->
-                <a class="navbar-brand fw-bold" href="{% url 'home' %}">Petit Talk Logo</a>
+                <a class="navbar-brand fw-bold" href="{% url 'home' %}">Petit Talk</a>
 
                 <!-- Toggle button for collapsed menu -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
@@ -60,7 +60,7 @@
                     <div class="ms-auto w-100">
                         <!-- Top section: Search + Auth Buttons -->
                         <div class="d-flex flex-wrap justify-content-end align-items-center gap-2 mb-2">
-                            <form class="d-flex flex-grow-1 flex-md-grow-0" role="search">
+                            <form class="d-flex align-items-center flex-grow-1 flex-md-grow-0" role="search">
                                 <input class="form-control me-2" type="search" placeholder="Search"
                                     aria-label="Search" />
                                 <button class="btn btn-primary btn-sm" type="submit">Search</button>
@@ -85,7 +85,7 @@
                         <!-- Bottom section buttons -->
                         <ul class="navbar-nav justify-content-end flex-wrap">
                             <li class="nav-item"><a class="nav-link" href="/#offers-section">Offers</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Newsletter</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/#newsletter-section">Newsletter</a></li>
                             {% if user.is_authenticated %}
                             <!--Students-->
                             {% if user.profile.is_student %}
@@ -114,7 +114,7 @@
                             {% endif %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'book_lesson' %}">Book a Class</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/#contact-section">Contact</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'view_bag' %}">My Basket</a></li>
                         </ul>
                     </div>
@@ -138,7 +138,7 @@
                 </div>
 
                 <!-- Right -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="contact-section">
                     <div class="d-flex justify-content-center justify-content-md-end align-items-center gap-3">
                         <a href="#" class="">
                             <i class="fab fa-facebook-f me-1"></i> Facebook

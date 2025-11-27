@@ -47,7 +47,7 @@
 
                 <!-- Edit Button -->
                 {% if profile.user == request.user and not profile.is_teacher %}
-                <a href="{% url 'edit_profile' %}" class="btn btn-warning btn-lg">Edit Profile</a>
+                <a href="{% url 'edit_profile' %}" class="btn btn-primary btn-lg">Edit Profile</a>
                 {% endif %}
 
             </div>

@@ -13,7 +13,7 @@
         </p>
 
         {% if user.is_authenticated %}
-        <a href="#" class="btn btn-primary btn-lg mt-3">Book a Class</a>
+        <a href="{% url 'book_lesson' %}" class="btn btn-primary btn-lg mt-3">Book a Class</a>
         {% else %}
         <div class="mt-4">
             <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg me-3">Register</a>
@@ -95,14 +95,14 @@
             </div>
             {% endif %}
 
-            <!-- Offer 2 -->
+            <!-- Group Offer - Static -->
             <div class="col-md-4">
                 <div class="offer-card card border-0 shadow-sm text-center h-100">
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="card-img-top" alt="Offer 2">
+                    <img src="{% static 'images/group-offer.png' %}" class="card-img-top" alt="Offer 2">
                     <div class="card-body">
-                        <h5 class="card-title">Offer Two</h5>
-                        <p class="card-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
-                            ab quaerat magni omnis beatae quibusdam?</p>
+                        <h5 class="card-title">Join a Group Class!</h5>
+                        <p class="card-text text-muted">Connect with other students and your teacher in a fun group
+                            session. Only €10 per person – reserve your spot today and learn together!</p>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="bg-light p-5 rounded mb-5 text-center">
+    <section class="bg-light p-5 rounded mb-5 text-center" id="newsletter-section">
         <h2>Join Our Newsletter</h2>
         <p>Get updates about new teachers, language tips, and offers straight to your inbox.</p>
         <form action="{% url 'newsletter:subscribe' %}" method="POST" class="newsletter-form mt-3">

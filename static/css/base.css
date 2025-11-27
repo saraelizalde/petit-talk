@@ -70,6 +70,22 @@ section {
     border-color: var(--strong-blue);
     color: #fff;
 }
+
+.btn-outline-primary {
+    color: var(--strong-blue);
+    border-color: var(--strong-blue);
+}
+
+.btn-outline-primary.active,
+.btn-outline-primary:active,
+.btn-outline-primary:hover,
+.btn-check:checked + .btn-outline-primary {
+    color: #fff;
+    background-color: var(--strong-blue);
+    border-color: var(--strong-blue);
+}
+
+
 .btn-primary:hover,
 .btn-primary:focus {
     background-color: var(--dark-blue);
@@ -137,6 +153,39 @@ header form[role="search"] .form-control:focus {
     box-shadow: 0 0 0 0.15rem rgba(57,87,187,0.15);
     border-color: var(--strong-blue);
 }
+
+/* Match height between input and all small navbar buttons */
+header form[role="search"] .form-control,
+header .btn.btn-sm {
+    height: 40px;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    display: flex;
+    align-items: center;
+}
+
+header form[role="search"] .btn {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+header .btn.btn-sm {
+    border-width: 1px;
+}
+
+header form[role="search"] .form-control {
+    height: 40px;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    margin-bottom: 0;
+}
+
+header form[role="search"] .btn {
+    height: 40px;
+    padding: 0 0.75rem;
+}
+
+
 
 
 

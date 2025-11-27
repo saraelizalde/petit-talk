@@ -20,7 +20,6 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     profile_image = models.ImageField(
         upload_to='profile_pics/',
-        default='images/default.png',
         blank=True,
         null=True
     )

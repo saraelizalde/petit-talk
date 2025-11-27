@@ -23,7 +23,7 @@ class Booking(models.Model):
     scheduled_time = models.DateTimeField()
     purpose = models.TextField(blank=True)
     status = models.CharField(
-        max_length=10, choices=BOOKING_STATUS, default='PENDING'
+        max_length=10, choices=BOOKING_STATUS, default='UNPAID'
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
