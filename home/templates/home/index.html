@@ -153,14 +153,17 @@
                 {% for comment in comments %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %} text-center">
 
-                    <img src="{% static 'images/placeholder-image.webp' %}" class="rounded-circle mb-3" width="80"
-                        height="80">
+                    <img src="{{ comment.user.profile.profile_image.url }}" class="rounded-circle mb-3" width="80"
+                        height="80" alt="{{ comment.user.username }}">
 
                     <blockquote class="blockquote">
                         <p>"{{ comment.content }}"</p>
                     </blockquote>
+
                     <footer class="blockquote-footer">
-                        <span class="text-decoration-none">{{ comment.user.username }}</span>
+                        <a href="{% url 'profile_detail' comment.user.id %}" class="text-decoration-none">
+                            {{ comment.user.username }}
+                        </a>
                     </footer>
 
                 </div>

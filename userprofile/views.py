@@ -13,6 +13,10 @@ def profile_detail(request):
     profile = request.user.profile
     return render(request, 'userprofile/profile_detail.html', {'profile': profile})
 
+def public_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    profile = get_object_or_404(Profile, user=user)
+    return render(request, 'userprofile/profile_detail.html', {'profile': profile})
 
 @login_required
 def profile_edit(request):
