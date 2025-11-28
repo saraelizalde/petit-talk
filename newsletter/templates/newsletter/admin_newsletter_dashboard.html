@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}Newsletter Subscribers{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-center mb-4">Newsletter Subscribers</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            {% if subscribers %}
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Subscribed On</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for s in subscribers %}
+                        <tr>
+                            <td>{{ s.email }}</td>
+                            <td>{{ s.first_name|default:"—" }}</td>
+                            <td>{{ s.created_at|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                {% if s.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if s.is_active %}
+                                <a href="{% url 'newsletter:unsubscribe' s.email %}"
+                                   class="btn btn-sm btn-outline-danger">
+                                    Unsubscribe
+                                </a>
+                                {% else %}
+                                <span class="text-muted small">No actions</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% else %}
+            <p class="text-center text-muted">No newsletter subscribers found.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

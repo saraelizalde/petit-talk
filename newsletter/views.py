@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from .forms import NewsletterForm
 from .models import Newsletter
+from django.contrib.admin.views.decorators import staff_member_required
 
 def subscribe(request):
     if request.method == "POST":
@@ -44,4 +45,11 @@ def unsubscribe(request, email):
     except Newsletter.DoesNotExist:
         messages.error(request, "Subscription not found.")
 
-    return redirect('index')
+    return redirect('newsletter:admin_dashboard')
+
+@staff_member_required
+def admin_dashboard(request):
+    subscribers = Newsletter.objects.all().order_by("-created_at")
+    return render(request, "newsletter/admin_newsletter_dashboard.html", {
+        "subscribers": subscribers
+    })
