@@ -4,8 +4,8 @@ from django.utils import timezone
 from datetime import timedelta
 
 BOOKING_STATUS = [
-    ('unpaid', 'Unpaid'),
-    ('paid', 'Paid'),
+    ('UNPAID', 'Unpaid'),
+    ('PAID', 'Paid'),
     ('PENDING', 'Pending'),
     ('CONFIRMED', 'Confirmed'),
     ('CANCELLED', 'Cancelled'),
@@ -23,7 +23,9 @@ class Booking(models.Model):
     scheduled_time = models.DateTimeField()
     purpose = models.TextField(blank=True)
     status = models.CharField(
-        max_length=10, choices=BOOKING_STATUS, default='UNPAID'
+        max_length=10,
+        choices=BOOKING_STATUS,
+        default='UNPAID'
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

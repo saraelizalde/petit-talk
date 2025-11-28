@@ -9,7 +9,10 @@ from django.db import transaction
 def view_bag(request):
     """Show student's unpaid / pending bookings."""
     order = Order.get_or_create_basket(request.user)
-    bag_bookings = Booking.objects.filter(student=request.user, status=['PENDING', 'UNPAID'])
+    bag_bookings = Booking.objects.filter(
+        student=request.user,
+        status__in=['UNPAID', 'PENDING']
+    )
     order.bookings.set(bag_bookings)
     if not bag_bookings.exists():
         order.offer = None
