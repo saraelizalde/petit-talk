@@ -48,7 +48,7 @@ def mark_order_as_paid(order_id):
     order.save()
 
     for b in order.bookings.all():
-        b.status = "paid"
+        b.status = "PAID"
         b.save()
 
     return HttpResponse(status=200)

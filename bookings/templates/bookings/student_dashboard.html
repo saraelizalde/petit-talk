@@ -50,11 +50,11 @@
                         <td>{{ booking.scheduled_time|date:"Y-m-d H:i" }}</td>
                         <td>
                             <span class="badge 
-                                {% if booking.status == 'confirmed' %} bg-success 
-                                {% elif booking.status == 'pending' %} bg-warning text-dark
-                                {% elif booking.status == 'cancelled' %} bg-danger
-                                {% elif booking.status == 'paid' %} bg-primary
-                                {% elif booking.status == 'unpaid' %} bg-secondary
+                                {% if booking.status == 'CONFIRMED' %} bg-success 
+                                {% elif booking.status == 'PENDING' %} bg-warning text-dark
+                                {% elif booking.status == 'CANCELLED' %} bg-danger
+                                {% elif booking.status == 'PAID' %} bg-primary
+                                {% elif booking.status == 'UNPAID' %} bg-secondary
                                 {% else %} bg-light text-dark {% endif %}
                             ">
                                 {{ booking.status|capfirst }}

@@ -56,7 +56,7 @@ def create_checkout_session(request, order_id):
     if not validate_booking_availability(order, request):
         return redirect("view_bag")
 
-    pending_bookings = order.bookings.filter(status="PENDING")
+    pending_bookings = order.bookings.filter(status__in=["UNPAID", "PENDING"])
     if not pending_bookings.exists():
         messages.error(request, "There are no unpaid bookings in this order.")
         return redirect("view_bag")
