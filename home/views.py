@@ -7,7 +7,7 @@ from comments.forms import CommentForm
 def index(request):
     active_offer = Offer.objects.filter(active=True).first()
     teachers = Profile.objects.filter(is_teacher=True)
-    comments = Comment.objects.filter(is_approved=True)
+    comments = Comment.objects.filter(is_approved=True).order_by('-created_at')
     form = CommentForm()
     context = {
         "active_offer": active_offer,
