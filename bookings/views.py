@@ -27,7 +27,7 @@ def book_lesson(request):
                 f"Your booking with {booking.teacher.username} is confirmed for "
                 f"{booking.scheduled_time.strftime('%Y-%m-%d %H:%M')}."
             )    
-            return redirect("student_dashboard")
+            return redirect("view_bag")
     else:
         form = BookingForm(user=request.user)
 
