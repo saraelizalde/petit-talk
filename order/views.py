@@ -37,7 +37,7 @@ def view_bag(request):
 def remove_from_bag(request, booking_id):
     """Remove booking from bag."""
     booking = get_object_or_404(Booking, id=booking_id, student=request.user)
-    if booking.status != 'PENDING':
+    if booking.status not in ['PENDING', 'UNPAID']:
         messages.error(request, "Only unpaid/pending bookings can be removed from bag.")
         return redirect('view_bag')
 
