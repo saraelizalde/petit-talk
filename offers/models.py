@@ -8,7 +8,6 @@ class Offer(models.Model):
     DISCOUNT_CHOICES = [
         (PERCENTAGE, "Percentage"),
         (FIXED_AMOUNT, "Fixed Amount"),
-        (BUNDLE, "Bundle"),
     ]
 
     name = models.CharField(max_length=100)
