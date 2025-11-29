@@ -69,38 +69,63 @@ def create_checkout_session(request, order_id):
         messages.error(request, "Checkout failed — invalid order total.")
         return redirect("view_bag")
 
-    amount_cents = int(order.total_eur * 100)
-    
-    session = stripe.checkout.Session.create(
-        payment_method_types=["card", "link"],
-        mode="payment",
-        customer_email=request.user.email,
-        line_items=[
-            {
-                "price_data": {
-                    "currency": "eur",
-                    "unit_amount": int(order.total_eur * 100),
-                    "product_data": {"name": f"{pending_bookings.count()} Lessons"},
-                },
-                "quantity": 1,
-            }
-        ],
+    # Create PaymentIntent (no Checkout Session!)
+    intent = stripe.PaymentIntent.create(
+        amount=int(order.total_eur * 100),
+        currency="eur",
         metadata={
             "order_id": order.id,
             "offer_id": order.offer.id if order.offer else None,
-            "subtotal": str(order.subtotal),
-            "total": str(order.total_eur),
         },
-        success_url=request.build_absolute_uri(reverse("checkout_success")),
-        cancel_url=request.build_absolute_uri(reverse("checkout_error")),
+        receipt_email=request.user.email,
     )
 
-    order.stripe_payment_intent = session.payment_intent
-    order.stripe_session_id = session.id
-    order.save(update_fields=["offer", "total_eur", "subtotal",
-                              "stripe_payment_intent", "stripe_session_id"])
+    order.stripe_payment_intent = intent.id
+    order.save(update_fields=["stripe_payment_intent", "offer", "total_eur", "subtotal"])
 
-    return redirect(session.url)
+    return redirect("payment_page", order_id=order.id)
+
+def payment_page(request, order_id):
+    """Render custom Stripe payment page using PaymentIntent + Elements."""
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    order = get_object_or_404(Order, id=order_id, student=request.user)
+
+    if not validate_booking_availability(order, request):
+        return redirect("view_bag")
+
+    # Refresh offer & total
+    active_offer = Offer.objects.filter(active=True).first()
+    order.offer = active_offer if active_offer else None
+    order.refresh_total()
+
+    if order.total_eur <= 0:
+        messages.error(request, "Checkout failed — invalid order total.")
+        return redirect("view_bag")
+
+    # Create or reuse PaymentIntent
+    if not order.stripe_payment_intent:
+        intent = stripe.PaymentIntent.create(
+            amount=int(order.total_eur * 100),
+            currency="eur",
+            metadata={
+                "order_id": order.id,
+                "offer_id": order.offer.id if order.offer else None,
+            },
+            receipt_email=request.user.email,
+        )
+        order.stripe_payment_intent = intent.id
+        order.save(update_fields=["stripe_payment_intent"])
+    else:
+        intent = stripe.PaymentIntent.retrieve(order.stripe_payment_intent)
+
+    context = {
+        "order": order,
+        "client_secret": intent.client_secret,
+        "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
+    }
+
+    return render(request, "checkout/payment_page.html", context)
 
 def success(request):
     return render(request, "checkout/success.html")

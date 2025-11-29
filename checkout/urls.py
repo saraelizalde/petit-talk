@@ -2,6 +2,7 @@ from django.urls import path
 from . import views, webhooks
 
 urlpatterns = [
+    path("pay/<int:order_id>/", views.payment_page, name="payment_page"),
     path("create-checkout/<int:order_id>/", views.create_checkout_session, name="create_checkout_session"),
     path("success/", views.success, name="checkout_success"),
     path("error/", views.error, name="checkout_error"),
