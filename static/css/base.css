@@ -376,26 +376,7 @@ form .form-control:focus {
 
 
 
-/* Footer */
-footer {
-    background-color: #f2f2f2;
-    color: #555;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-}
-footer h5 {
-    font-family: var(--secondary-font);
-    color: var(--dark-blue);
-}
-footer a {
-    color: var(--strong-red);
-    text-decoration: none;
-    transition: color .25s ease;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-}
-footer a:hover {
-    color: var(--dark-red);
-}
+
 
 
 
@@ -777,6 +758,86 @@ form input:focus, form textarea:focus, form select:focus {
 
 
 
+
+
+
+
+
+/* Booking dashboard student*/
+
+/* More specific selector overrides Bootstrap's .badge */
+.table .badge.status-cancelled {
+    background-color: var(--dark-red);
+    color: white;
+}
+
+.table .badge.status-paid {
+    background-color: #16A34A;
+    color: white;
+}
+
+.table .badge.status-confirmed {
+    background-color: var(--strong-blue);
+    color: white;
+}
+
+.table .badge.status-completed {
+    background-color: #6c757d;
+    color: white;
+}
+
+.table .badge.status-pending {
+    background-color: #f8d34a;
+    color: #333;
+}
+
+.table .badge.status-unpaid {
+    background-color: #f8d34a;
+    color: #333;
+}
+
+.table .badge.status-default {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Footer */
+footer {
+    background-color: #f2f2f2;
+    color: #555;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+footer h5 {
+    font-family: var(--secondary-font);
+    color: var(--dark-blue);
+}
+footer a {
+    color: var(--strong-red);
+    text-decoration: none;
+    transition: color .25s ease;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+footer a:hover {
+    color: var(--dark-red);
+}
 
 
 
