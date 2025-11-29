@@ -3,12 +3,20 @@ from django.conf import settings
 from django.http import HttpResponse
 from order.models import Order
 from django.views.decorators.csrf import csrf_exempt
+from .webhook_handler import StripeWH_Handler
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
 @csrf_exempt
 def stripe_webhook(request):
+    """
+    Handle incoming Stripe webhook events.
+
+    Event sent:
+    - payment_intent.succeeded
+    - checkout.session.completed
+    """
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
 
@@ -17,38 +25,17 @@ def stripe_webhook(request):
             payload, sig_header, endpoint_secret
         )
     except Exception:
+        # Invalid payload or invalid signature
         return HttpResponse(status=400)
 
-    if event["type"] == "checkout.session.completed":
-        intent = event["data"]["object"]
-        order_id = intent["metadata"].get("order_id")
-        return mark_order_as_paid(order_id)
+    handler = StripeWH_Handler(request)
 
-    if event["type"] == "payment_intent.succeeded":
-        intent = event["data"]["object"]
-        
-        sessions = stripe.checkout.Session.list(payment_intent=intent["id"])
-        if sessions and sessions.data:
-            session = sessions.data[0]
-            order_id = session["metadata"].get("order_id")
-            return mark_order_as_paid(order_id)
-        
-    return HttpResponse(status=200)
-        
-def mark_order_as_paid(order_id):
-    if not order_id:
-        return HttpResponse(status=400)
-        
-    try:
-        order = Order.objects.get(id=order_id)
-    except Order.DoesNotExist:
-        return HttpResponse(status=404)
-        
-    order.paid = True
-    order.save()
+    event_map = {
+        "payment_intent.succeeded": handler.handle_payment_intent_succeeded,
+        "checkout.session.completed": handler.handle_checkout_session_completed,
+    }
 
-    for b in order.bookings.all():
-        b.status = "PAID"
-        b.save()
+    # Get the correct handler or fall back to the generic handler
+    event_handler = event_map.get(event["type"], handler.handle_event)
 
-    return HttpResponse(status=200)
+    return event_handler(event)

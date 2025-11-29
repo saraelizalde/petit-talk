@@ -72,7 +72,7 @@ def create_checkout_session(request, order_id):
     amount_cents = int(order.total_eur * 100)
     
     session = stripe.checkout.Session.create(
-        payment_method_types=["card"],
+        payment_method_types=["card", "link"],
         mode="payment",
         customer_email=request.user.email,
         line_items=[
