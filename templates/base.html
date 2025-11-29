@@ -113,7 +113,7 @@
                             {% endif %}
                             <li class="nav-item"><a class="nav-link" href="{% url 'book_lesson' %}">Book a Class</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="/#contact-section">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'view_bag' %}">My Basket</a></li>
                         </ul>
                     </div>
@@ -145,7 +145,7 @@
                         <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="">
                             <i class="fab fa-instagram me-1"></i> Instagram
                         </a>
-                        <a href="#" class="">
+                        <a href="{% url 'contact' %}" class="">
                             <i class="fas fa-envelope me-1"></i> Contact
                         </a>
                     </div>

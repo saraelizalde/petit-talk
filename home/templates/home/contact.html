@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="account-card p-5">
+                    <h2 class="mb-4" style="color: var(--strong-red);">Contact Petit Talk</h2>
+                    <p class="mb-3">We’d love to hear from you! Reach out to us through any of the following:</p>
+                    
+                    <p class="mb-2">
+                        <i class="fas fa-envelope me-2"></i>
+                        <a href="mailto:petittalkschool@gmail.com" class="text-decoration-none" style="color: var(--strong-blue);">
+                            petittalkschool@gmail.com
+                        </a>
+                    </p>
+                    
+                    <p class="mb-2">
+                        <i class="fab fa-facebook-f me-2"></i>
+                        <a href="https://www.facebook.com/profile.php?id=61584317976559" target="_blank" rel="noopener" class="text-decoration-none" style="color: var(--strong-blue);">
+                            Facebook
+                        </a>
+                    </p>
+
+                    <p class="mb-2">
+                        <i class="fab fa-instagram me-2"></i>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="text-decoration-none" style="color: var(--strong-blue);">
+                            Instagram
+                        </a>
+                    </p>
+
+                    <p class="mt-4" style="color: #555;">
+                        Petit Talk – Learn French with real French teachers<br>
+                        &copy; {{ now|date:"Y" }} Petit Talk — All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

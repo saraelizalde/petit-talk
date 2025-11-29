@@ -16,3 +16,6 @@ def index(request):
         "form": form,
     }
     return render(request, 'home/index.html', context)
+
+def contact(request):
+    return render(request, 'home/contact.html')
