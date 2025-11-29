@@ -34,6 +34,11 @@
         crossorigin="anonymous"></script>
     <!-- Stripe -->
     <script src=""></script>
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'images/site.webmanifest' %}">
     {% endblock %}
 
     {% block extra_js %}
@@ -139,7 +144,8 @@
                 <!-- Right -->
                 <div class="col-md-6" id="contact-section">
                     <div class="d-flex justify-content-center justify-content-md-end align-items-center gap-3">
-                        <a href="https://www.facebook.com/profile.php?id=61584317976559" rel="noopener" target="_blank" class="">
+                        <a href="https://www.facebook.com/profile.php?id=61584317976559" rel="noopener" target="_blank"
+                            class="">
                             <i class="fab fa-facebook-f me-1"></i> Facebook
                         </a>
                         <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="">
