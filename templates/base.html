@@ -9,6 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- SEO Meta Description -->
+    <meta name="description"
+        content="Petit Talk offers online French classes with native French speakers. Learn French interactively from the comfort of your home.">
+    <meta name="keywords" content="French classes, online French lessons, learn French, French tutors, Petit Talk">
+    <meta name="author" content="Sara Elizalde">
+
     {% endblock %}
 
     {% block extra_meta %}{% endblock %}
@@ -142,14 +149,15 @@
                 <!-- Right -->
                 <div class="col-md-6" id="contact-section">
                     <div class="d-flex justify-content-center justify-content-md-end align-items-center gap-3">
-                        <a href="https://www.facebook.com/profile.php?id=61584317976559" rel="noopener" target="_blank"
-                            class="">
+                        <a href="https://www.facebook.com/profile.php?id=61584317976559" rel="noopener noreferrer"
+                            target="_blank" aria-label="Visit Petit Talk on Facebook">
                             <i class="fab fa-facebook-f me-1"></i> Facebook
                         </a>
-                        <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Visit Petit Talk on Instagram">
                             <i class="fab fa-instagram me-1"></i> Instagram
                         </a>
-                        <a href="{% url 'contact' %}" class="">
+                        <a href="{% url 'contact' %}">
                             <i class="fas fa-envelope me-1"></i> Contact
                         </a>
                     </div>
