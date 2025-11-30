@@ -14,6 +14,16 @@ BOOKING_STATUS = [
 
 
 class Booking(models.Model):
+    """
+    Represents a scheduled lesson between a student and a teacher.
+
+    Each booking is linked to:
+    - a student (User)
+    - a teacher (User)
+    - an exact scheduled datetime
+    - an optional lesson purpose/goal
+    - a defined booking status
+    """
     student = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='student_bookings'
     )
@@ -38,7 +48,14 @@ class Booking(models.Model):
 
     def clean(self):
         """
-        Custom validation: prevent double booking and ensure 48-hour notice.
+        Validate the booking object.
+
+        Ensures:
+        - the scheduled time is at least 48 hours in the future
+        - the teacher is not already booked for the same time slot
+
+        Raises:
+            ValidationError: If the booking violates constraints.
         """
         from django.core.exceptions import ValidationError
 

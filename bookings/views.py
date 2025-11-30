@@ -11,10 +11,26 @@ from userprofile.models import Profile
 
 @login_required
 def book_lesson(request):
+    """
+    Handle the creation of a new lesson booking.
+
+    GET:
+        Displays an empty BookingForm and optionally pre-selects a teacher.
+
+    POST:
+        - Injects the student into the form before validation.
+        - Validates scheduling rules (48h, teacher conflict, student conflict).
+        - Saves the booking and redirects the user to their bag.
+
+    Returns:
+        Rendered booking form page or redirect to view_bag on success.
+    """
     teacher_id = request.GET.get("teacher")
     
     if request.method == "POST":
         form = BookingForm(request.POST, user=request.user)
+
+        form.instance.student = request.user
 
         if form.is_valid():
             booking = form.save(commit=False)

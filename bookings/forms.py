@@ -5,6 +5,19 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 class BookingForm(forms.ModelForm):
+    """
+    Form used for creating and validating a booking.
+
+    Handles:
+    - teacher selection
+    - date & hour selection (separate fields)
+    - lesson purpose
+    - validation of:
+        • 48-hour rule
+        • allowed operating hours
+        • teacher availability
+        • student schedule conflicts
+    """
     date = forms.DateField(
         widget=forms.DateInput(attrs={"type": "date", "class": "form-control"}),
         label="Select Date"
@@ -33,6 +46,9 @@ class BookingForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        """
+        Restrict teacher queryset to users who are registered as teachers.
+        """
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.fields['teacher'].queryset = (
@@ -40,6 +56,19 @@ class BookingForm(forms.ModelForm):
         )
 
     def clean(self):
+        """
+        Validate booking form input.
+
+        Ensures:
+        - scheduled time is properly combined from date + hour
+        - 48-hour rule is respected
+        - lesson hours fall within 08:00–20:00
+        - teacher is not booked at that time
+        - student is not booked at that time
+
+        Raises:
+            ValidationError: If any rule is violated.
+        """
         cleaned_data = super().clean()
         date = cleaned_data.get("date")
         hour_str = cleaned_data.get("hour")
@@ -77,5 +106,17 @@ class BookingForm(forms.ModelForm):
 
         if conflict.exists():
             raise ValidationError("This time slot is already booked for this teacher.")
+
+        # Check double booking for the same student
+        student_conflict = Booking.objects.filter(
+            student=self.instance.student or self.initial.get("student"),
+            scheduled_time=scheduled_time
+        ).exclude(status__iexact='CANCELLED').exclude(status__iexact='COMPLETED')
+
+        if self.instance.pk:
+            student_conflict = student_conflict.exclude(pk=self.instance.pk)
+
+        if student_conflict.exists():
+            raise ValidationError("You already have a booking at this time.")
 
         return cleaned_data
