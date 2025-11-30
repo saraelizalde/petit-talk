@@ -24,10 +24,6 @@
                 <span class="badge badge-student mb-2">Student</span>
                 {% endif %}
 
-                <p class="text-muted mb-3">
-                    Language Level: {{ profile.get_language_level_display|default:"Not specified" }}
-                </p>
-
                 <!-- Bio -->
                 <p class="mb-4">{{ profile.bio|default:"This teacher hasn’t written a bio yet." }}</p>
 

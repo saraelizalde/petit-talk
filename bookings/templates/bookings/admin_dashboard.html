@@ -24,8 +24,16 @@
         <tbody>
             {% for booking in bookings %}
             <tr>
-                <td>{{ booking.student.email }}</td>
-                <td>{{ booking.teacher.email }}</td>
+                <td>
+                    <a href="{% url 'profile_detail' booking.student.id %}" class="text-decoration-none">
+                        {{ booking.student.username }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'profile_detail' booking.teacher.id %}" class="text-decoration-none">
+                        {{ booking.teacher.username }}
+                    </a>
+                </td>
                 <td>{{ booking.scheduled_time|date:"Y-m-d H:i" }}</td>
                 <td>{{ booking.status }}</td>
                 <td>
