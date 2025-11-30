@@ -3,6 +3,8 @@ from offers.models import Offer
 from userprofile.models import Profile
 from comments.models import Comment
 from comments.forms import CommentForm
+from django.http import HttpResponse
+from django.template import loader
 
 def index(request):
     active_offer = Offer.objects.filter(active=True).first()
@@ -19,3 +21,8 @@ def index(request):
 
 def contact(request):
     return render(request, 'home/contact.html')
+
+
+def robots_txt(request):
+    template = loader.get_template("robots.txt")
+    return HttpResponse(template.render(), content_type="text/plain")

@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /checkout/create-checkout/
+Disallow: /checkout/webhook/
+Disallow: /order/bag/remove/
+Disallow: /profile/teacher-dashboard/
+Disallow: /profile/teacher-dashboard/edit/
+Disallow: /profile/teacher-dashboard/delete/
+
+Allow: /
+
+Sitemap: https://petit-talk-ca40a73c8b94.herokuapp.com/sitemap.xml
