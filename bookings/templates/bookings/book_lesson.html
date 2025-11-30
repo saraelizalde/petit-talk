@@ -74,6 +74,28 @@
     </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const errorLists = document.querySelectorAll('ul.errorlist.nonfield');
+
+    errorLists.forEach(ul => {
+        const seen = new Set();
+        const items = ul.querySelectorAll('li');
+
+        items.forEach(li => {
+            const text = li.textContent.trim();
+            if (seen.has(text)) {
+                li.remove(); // remove duplicate
+            } else {
+                seen.add(text);
+            }
+        });
+    });
+});
+</script>
+
+
+
 <!-- Force minutes to 00 -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
