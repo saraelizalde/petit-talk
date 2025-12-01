@@ -41,10 +41,14 @@ class Booking(models.Model):
 
     class Meta:
         ordering = ['-scheduled_time']
-        unique_together = ('teacher', 'scheduled_time')  #Avoid double-booking for teachers
+        unique_together = ('teacher', 'scheduled_time')
 
     def __str__(self):
-        return f"{self.student.username} with {self.teacher.username} at {self.scheduled_time.strftime('%Y-%m-%d %H:%M')}"
+        return (
+            f"{self.student.username} with "
+            f"{self.teacher.username} at "
+            f"{self.scheduled_time.strftime('%Y-%m-%d %H:%M')}"
+        )
 
     def clean(self):
         """
@@ -61,11 +65,13 @@ class Booking(models.Model):
 
         # Check 48 hours in the future
         if self.scheduled_time < timezone.now() + timedelta(hours=48):
-            raise ValidationError("Bookings must be made at least 48 hours in advance.")
+            raise ValidationError(
+                "Bookings must be made at least 48 hours in advance.")
 
         # Avoid double-booking
         overlap = Booking.objects.filter(
             teacher=self.teacher, scheduled_time=self.scheduled_time
         ).exclude(pk=self.pk)
         if overlap.exists():
-            raise ValidationError("This time slot is already booked for this teacher.")
+            raise ValidationError(
+                "This time slot is already booked for this teacher.")

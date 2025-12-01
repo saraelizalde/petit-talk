@@ -8,14 +8,35 @@ from .webhook_handler import StripeWH_Handler
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
+
 @csrf_exempt
 def stripe_webhook(request):
     """
-    Handle incoming Stripe webhook events.
+    Receive and handle incoming webhook events from Stripe.
 
-    Event sent:
-    - payment_intent.succeeded
-    - checkout.session.completed
+    This view:
+        - Verifies the webhook signature to ensure authenticity.
+        - Parses the incoming event payload.
+        - Delegates the event to the appropriate handler method
+          inside the StripeWH_Handler class.
+
+    Supported Event Types:
+        - `payment_intent.succeeded`: Fired when a PaymentIntent
+          successfully completes.
+        - `checkout.session.completed`: Fired when a Checkout Session
+          finishes successfully.
+
+    Any unhandled events are passed to a generic fallback handler.
+
+    Args:
+        request (HttpRequest):
+            The raw HTTP request sent by Stripe, containing the
+            webhook JSON payload and signature header.
+
+    Returns:
+        HttpResponse:
+            A response acknowledging receipt of the event.
+            If verification fails, a 400 response is returned.
     """
     payload = request.body
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
@@ -31,8 +52,10 @@ def stripe_webhook(request):
     handler = StripeWH_Handler(request)
 
     event_map = {
-        "payment_intent.succeeded": handler.handle_payment_intent_succeeded,
-        "checkout.session.completed": handler.handle_checkout_session_completed,
+        "payment_intent.succeeded":
+            handler.handle_payment_intent_succeeded,
+        "checkout.session.completed":
+            handler.handle_checkout_session_completed,
     }
 
     # Get the correct handler or fall back to the generic handler

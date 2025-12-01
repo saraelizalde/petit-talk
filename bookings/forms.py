@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, time
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
+
 class BookingForm(forms.ModelForm):
     """
     Form used for creating and validating a booking.
@@ -19,7 +20,8 @@ class BookingForm(forms.ModelForm):
         • student schedule conflicts
     """
     date = forms.DateField(
-        widget=forms.DateInput(attrs={"type": "date", "class": "form-control"}),
+        widget=forms.DateInput(attrs={
+            "type": "date", "class": "form-control"}),
         label="Select Date"
     )
 
@@ -32,7 +34,8 @@ class BookingForm(forms.ModelForm):
         widget=forms.Textarea(attrs={
             'rows': 3,
             'class': 'form-control',
-            'placeholder': 'What would you like to focus on during your lesson?'
+            'placeholder':
+                'What would you like to focus on during your lesson?'
         }),
         required=False,
         label="Lesson Goal or Focus"
@@ -87,31 +90,41 @@ class BookingForm(forms.ModelForm):
 
         # 48-hour rule
         if scheduled_time < timezone.now() + timedelta(hours=48):
-            raise ValidationError("Bookings must be made at least 48 hours in advance.")
+            raise ValidationError(
+                "Bookings must be made at least 48 hours in advance.")
 
         # Allowed hours
         if not (8 <= hour_int <= 19):
             raise ValidationError(
-                "Bookings are only available hourly between 08:00 and 20:00 (last start 19:00)."
+                "Bookings are only available hourly between 08:00 and 20:00."
             )
 
         # Check double booking for the same teacher
-        conflict = Booking.objects.filter(
-            teacher=teacher,
-            scheduled_time=scheduled_time
-        ).exclude(status__iexact='CANCELLED').exclude(status__iexact='COMPLETED')
+        conflict = (
+            Booking.objects.filter(
+                teacher=teacher,
+                scheduled_time=scheduled_time
+            )
+            .exclude(status__iexact='CANCELLED')
+            .exclude(status__iexact='COMPLETED')
+        )
 
         if self.instance.pk:
             conflict = conflict.exclude(pk=self.instance.pk)
 
         if conflict.exists():
-            raise ValidationError("This time slot is already booked for this teacher.")
+            raise ValidationError(
+                "This time slot is already booked for this teacher.")
 
         # Check double booking for the same student
-        student_conflict = Booking.objects.filter(
-            student=self.instance.student or self.initial.get("student"),
-            scheduled_time=scheduled_time
-        ).exclude(status__iexact='CANCELLED').exclude(status__iexact='COMPLETED')
+        student_conflict = (
+            Booking.objects.filter(
+                student=self.instance.student or self.initial.get("student"),
+                scheduled_time=scheduled_time
+            )
+            .exclude(status__iexact='CANCELLED')
+            .exclude(status__iexact='COMPLETED')
+        )
 
         if self.instance.pk:
             student_conflict = student_conflict.exclude(pk=self.instance.pk)

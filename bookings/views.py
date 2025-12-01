@@ -22,8 +22,11 @@ def book_lesson(request):
         - Validates scheduling rules (48h, teacher conflict, student conflict).
         - Saves the booking and redirects the user to their bag.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
+
     Returns:
-        Rendered booking form page or redirect to view_bag on success.
+        HttpResponse: Renders the booking form page or redirects to view_bag on success.
     """
     teacher_id = request.GET.get("teacher")
     
@@ -55,6 +58,20 @@ def book_lesson(request):
 
 @login_required
 def student_dashboard(request):
+    """
+    Display the dashboard for a student showing their bookings.
+
+    Supports filtering by:
+        - 'upcoming': future bookings
+        - 'past': past bookings
+        - 'all': all bookings
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the student dashboard with filtered bookings.
+    """
     filter_option = request.GET.get("filter", "all")
     now = timezone.now()
 
@@ -81,6 +98,17 @@ def student_dashboard(request):
 
 @login_required
 def teacher_dashboard(request):
+    """
+    Display the dashboard for teachers showing their bookings.
+
+    Access is restricted to users marked as teachers.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the teacher dashboard or redirects unauthorized users.
+    """
     if not request.user.profile.is_teacher:
         messages.error(request, "You are not authorized to access the teacher dashboard.")
         return redirect("home")
@@ -90,6 +118,18 @@ def teacher_dashboard(request):
 
 @login_required
 def confirm_booking(request, booking_id):
+    """
+    Allow a teacher to confirm a booking.
+
+    Only the teacher associated with the booking can confirm it.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        booking_id (int): ID of the booking to confirm.
+
+    Returns:
+        HttpResponse: Redirects to the teacher dashboard with a success or error message.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
 
     if request.user != booking.teacher:
@@ -105,6 +145,18 @@ def confirm_booking(request, booking_id):
 
 @login_required
 def decline_booking(request, booking_id):
+    """
+    Allow a teacher to decline a booking.
+
+    Only the teacher associated with the booking can decline it.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        booking_id (int): ID of the booking to decline.
+
+    Returns:
+        HttpResponse: Redirects to the teacher dashboard with a success or error message.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
 
     if request.user != booking.teacher:
@@ -119,11 +171,34 @@ def decline_booking(request, booking_id):
 
 @staff_member_required
 def admin_booking_dashboard(request):
+    """
+    Display all bookings for staff in an administrative dashboard.
+
+    Bookings are sorted by scheduled time in descending order.
+    Uses select_related to optimize student and teacher queries.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the admin dashboard with all bookings.
+    """
     bookings = Booking.objects.select_related("student", "teacher").order_by("-scheduled_time")
     return render(request, "bookings/admin_dashboard.html", {"bookings": bookings})
 
 @staff_member_required
 def admin_update_booking_status(request, booking_id, new_status):
+    """
+    Allow staff to update the status of a booking.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        booking_id (int): ID of the booking to update.
+        new_status (str): New status to assign to the booking.
+
+    Returns:
+        HttpResponse: Redirects to the admin dashboard with a success message.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
     booking.status = new_status
     booking.save()
@@ -132,6 +207,16 @@ def admin_update_booking_status(request, booking_id, new_status):
 
 @staff_member_required
 def admin_delete_booking(request, booking_id):
+    """
+    Allow staff to delete a booking from the system.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        booking_id (int): ID of the booking to delete.
+
+    Returns:
+        HttpResponse: Redirects to the admin dashboard with a success message.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
     booking.delete()
     messages.success(request, "Booking deleted.")

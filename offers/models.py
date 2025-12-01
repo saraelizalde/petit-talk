@@ -1,6 +1,25 @@
 from django.db import models
 
+
 class Offer(models.Model):
+    """
+    Represents a promotional offer that can apply discounts at checkout.
+
+    Fields:
+        name (str): Name of the offer.
+        description (str): Optional detailed text about the promotion.
+        discount_type (str): Type of discount (percentage or fixed amount).
+        discount_value (Decimal): Value applied depending on discount type.
+        image (ImageField): Optional offer banner.
+        active (bool): Whether the offer is currently available.
+        created_at (datetime): When the offer was created.
+        updated_at (datetime): Last modification timestamp.
+
+    Behavior:
+        - Offers automatically order newest-first.
+        - Provides helper methods for activation checks and applying discounts.
+    """
+
     PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     BUNDLE = "bundle"
@@ -23,20 +42,30 @@ class Offer(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
+        """Return readable admin-friendly representation."""
         return f"{self.name} ({'Active' if self.active else 'Inactive'})"
 
     def is_active(self):
-        """Return True if the offer is active."""
+        """
+        Return True if the offer is active.
+
+        Useful for template checks and business logic.
+        """
+
         return self.active
 
     def apply_discount(self, subtotal):
-        """Return discounted total based on offer type."""
+        """
+        Apply the offer discount to a given subtotal.
+
+        Args:
+            subtotal (Decimal): The current order subtotal.
+
+        Returns:
+            Decimal: The new total after applying the discount.
+        """
         if self.discount_type == 'percentage':
             return subtotal - (subtotal * (self.discount_value / 100))
         if self.discount_type == 'fixed_amount':
             return max(subtotal - self.discount_value, 0)
-        #if self.discount_type == 'bundle':
-            #return subtotal  
         return subtotal
-
-
