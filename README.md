@@ -9,7 +9,7 @@ To visit the deployed version of Petit Talk : [click here.](https://petit-talk-c
 ## Table of Contents
 
 1. [Purpose](#1-purpose)
-2. [Users & Website Goals](#2-users--website-goals)
+2. [Business Goals & Strategy](#2-business-goals--strategy)
 3. [Features](#3-features)
 4. [Planning](#4-planning)
      - 4.1. [User Stories](#41-user-stories)
@@ -24,34 +24,25 @@ To visit the deployed version of Petit Talk : [click here.](https://petit-talk-c
      - 5.3 [Manual Tests](#53-manual-tests)
      - 5.4 [Responsiveness & Accessibility](#54-responsiveness--accessibility)
 6. [E-Commerce Implementation](#6-e-commerce-implementation)
+     - 6.1 [E-Commerce Business Model](#61-e-commerce-business-model)
+     - 6.2 [Payment System & Stripe Integration](#62-payment-system--stripe-integration)
 Products & Models
 Payment Integration
 CRUD Functionality
 Forms & Validation
 Feedback & Notifications
 7. [Authentification & Role-Based Authorization](#7-authentification--role-based-authorisation)
-User Registration & Login
-Role-Based Access Control
-Security Measures
 8. [SEO & Marketing](#8-seo--marketting)
      - 8.1. [Target Audience](#81-target-audience)
      - 8.2. [Platforms for Engagement](#82-platforms-for-engagement)
      - 8.3. [User Needs and Content Strategy](#83-user-needs-and-content-strategy)
      - 8.4. [Sales and Promotions](#84-sales-and-promotions)
-     - 8.5 [Marketting Goals and Supporting Strategies](#85-marketting-goals-and-supporting-strategies)  
-Search Engine Optimization (SEO)
-Meta tags
-Sitemap & robots.txt
-404 pages & redirects
-Internal linking
-Marketing Techniques
-Facebook page & social media
-Newsletter signup
-Branding & promotion strategy
+     - 8.5 [Marketting Goals and Supporting Strategies](#85-marketting-goals-and-supporting-strategies)
+     - 8.6 [SEO Techniques](#86-seo-techniques)
 9. [Deployment & Setup](#9-deployment--setup)
-E-Commerce Business Model
-10. [Bugs & Challenges Encountered](#10-bugs--challenges-encountered)
-11. [Credits](#11-credits)
+10. [Development](#10-development)
+11. [Bugs & Challenges Encountered](#10-bugs--challenges-encountered)
+12. [Credits](#11-credits)
 
 ## 1. Purpose
 
@@ -72,7 +63,19 @@ Target Audience:
 - English-speaking students seeking to learn French from native speakers.
 - Learners looking for interactive, personalized, and authentic language learning experiences.
 
-## 2. Users & Website Goals
+## 2. Business Goals & Strategy
+- Goal 1: Attract New Users
+Strategy: Awareness through social media, SEO, and shareable content.
+Tactics: Instagram reels, Facebook ads, SEO blog posts.
+- Goal 2: Convert Visitors into Paying Students
+Strategy: Strong calls-to-action and clear offers.
+Tactics: Bundle deals, landing pages, email nurture sequences.
+- Goal 3: Retain Customers
+Strategy: Loyalty programs and consistent engagement.
+Tactics: Newsletters, repeat-purchase discounts, referral programs.
+- Goal 4: Build Brand Identity
+Strategy: Leverage authenticity, French culture, and teacher/student stories.
+Tactics: Consistent branding, behind-the-scenes content, social media storytelling.
 
 ## 3. Features
 
@@ -205,19 +208,57 @@ All tests passed successfully.
 - Navbar collapses correctly on smaller screens.
 - Text and buttons are readable on all screen sizes.
 - Contrast and color choices meet accessibility standards.
-- Staff and teachers dashboards are optimized for larger screens but still works on smaller screens.
+- Staff and teachers dashboards are optimized for larger screens. On smaller screens, a horizontal scroll bar appears for the tables to maintain usability without breaking the layout.
+
 - Tested on Chrome DevTools with multiple screen sizes
 - The website has been tested on different browsers such as Chrome, Firefox and Safari and all works.
 ![Nav-bar on bigger screen](static/images/readme-images/nav-bar-big-screen.png)
 ![Nav-bar on smaller screen](static/images/readme-images/nav-bar-small-screen.png)
 
-### 6. E-Commerce Implementation
+## 6. E-Commerce Implementation
+### 6.1 E-Commerce Business Model
+Petit Talk generates revenue through online French lessons delivered by native speakers. The business model is structured to provide flexibility for users while maximizing engagement and sales through lesson and promotional offers.
+#### Revenue Streams:
+- Individual Lessons – Students can purchase lessons for immediate scheduling.
+- Lesson Bundles / Packs (Future Implementation) – Packages of 5, 10, or 20 lessons at discounted rates to encourage bulk purchases.
+- Promotional Offers – Seasonal discounts, exam prep bundles, and referral bonuses to drive conversions and retain users.
+#### Value to Users:
+- Flexible scheduling and tailored lesson plans.
+- Transparent pricing with bundled discounts for committed learners.
+- Access to native French speakers and authentic learning experiences.
+- Personalized dashboards to track bookings, payments, and progress.
+### 6.2 Payment System & Stripe Integration
+Petit Talk uses Stripe to securely process online payments.
+Stripe webhooks are implemented to verify whether a payment has succeeded or failed, and all transactions can be monitored through the Stripe Developer Dashboard.
+#### Payment Flow:
+- Users create one or several bookings, add them to their basket, active offers automatically update the total price and proceed to checkout.
+- Form validators ensure that users provide a full name, a valid email address, a country, and a valid card number.
+- (Known limitation: the price sometimes displays as 18.0000 instead of 18.00. This is only a formatting issue and does not affect the actual charged amount.)
+![Basket](static/images/readme-images/basket.png)
+![Complete your payment](static/images/readme-images/payment.png)
+- A Stripe PaymentIntent is created in Django and returned to the frontend.
+- Stripe.js confirms the payment securely using the user’s card details.
+![Payment intent successfull](static/images/readme-images/payment-intent.png)
+- Stripe webhook finalizes the order:
+     - Success: A confirmation page is shown, a success message is displayed, and the booking becomes PAID in the student/teacher and admin dashboard.
+     ![Payment successfull](static/images/readme-images/payment-success.png)
+     - Failure: An error message informs the user, and the booking stays UNPAID and in the basket.
+     ![Payment Fail](static/images/readme-images/payment-fail.png)
+### Security & Best Practices
+- Stripe public and secret keys are securely stored in env.py and in Heroku CONFIG VARS, never in the GitHub repository.
+- Any keys that were accidentally pushed to GitHub were IMMEDIATELY REPLACED with new keys both locally and on Heroku.
 
 ## 7. Authentification & Role-Based Authorization
 The application uses a secure authentication system to manage user access and protect sensitive data. Users can register, log in, and access functionality based on their assigned role (Student, Teacher, or Admin). Role-based authorization ensures that users can only access the features relevant to their role, maintaining privacy, security, and operational integrity.
 
-#### Access & Permission:
+### Access & Permission:
 ![Access and permissions](static/images/readme-images/access-permission.png)
+#### Role Assignment:
+Roles are assigned during registration or by admin approval.
+- Students are auto-assigned upon signup.
+- Teachers are created by the admin in his dashboard, but can update their own profile, upload photo and video.
+- Admin accounts are pre-assigned by system setup.
+- User Feedback on Access: Unauthorized access attempts are redirected to a safe page such as the homepage.
 
 ## 8. SEO & Marketing
 ### 8.1 Target Audience
@@ -317,6 +358,13 @@ KPIs: Engagement (likes, shares, comments), brand recall metrics, social media f
 Facebook: Target parents and older audiences — longer, trust-building content.
 Instagram: Target students, travelers, professionals — short, aspirational content.
 Email: Target all segments for conversion and retention (newsletters, promotions, personalized reminders).
+### 8.6 SEO Techniques
+Meta tags: Petit Talk includes a clear and engaging meta description in the head:
+- "Petit Talk offers online French classes with native French speakers. Learn French interactively from the comfort of your home."
+Keywords: Carefully chosen keywords are included in the head to attract the target audience:
+- "French classes, online French lessons, learn French, French tutors, Petit Talk, language learning, online education"
+- Additional SEO features: The website implements a sitemap, a robots.txt file, and a custom 404 error page to enhance search engine visibility and improve user experience.
+![404 page](static/images/readme-images/404.png)
 
 ## 9. Deployment & Setup
 This project was deployed to [Heroku](https://id.heroku.com/): a hosting platform.
@@ -372,6 +420,8 @@ This project was deployed to [Heroku](https://id.heroku.com/): a hosting platfor
      - Click Deploy Branch manually.
      - Once deployed, visit your Heroku app to verify it is running.
 
-## 10. Bugs & Challenges Encountered
+## 10. Development
 
-## 11. Credits
+## 11. Bugs & Challenges Encountered
+
+## 12. Credits
