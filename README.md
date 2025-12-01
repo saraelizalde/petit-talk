@@ -8,7 +8,7 @@ To visit the deployed version of Petit Talk : [click here.](https://petit-talk-c
 
 ## Table of Contents
 
-1. [Purpose](#1-purpose).
+1. [Purpose](#1-purpose)
 2. [Users & Website Goals](#2-users--website-goals)
 3. [Features](#3-features)
 4. [Planning](#4-planning)
@@ -29,7 +29,7 @@ Payment Integration
 CRUD Functionality
 Forms & Validation
 Feedback & Notifications
-7. [Authentication & Role-Based Authorization](#7-authentification--role-based-authorisation)
+7. [Authentification & Role-Based Authorization](#7-authentification--role-based-authorisation)
 User Registration & Login
 Role-Based Access Control
 Security Measures
@@ -38,7 +38,7 @@ Security Measures
      - 8.2. [Platforms for Engagement](#82-platforms-for-engagement)
      - 8.3. [User Needs and Content Strategy](#83-user-needs-and-content-strategy)
      - 8.4. [Sales and Promotions](#84-sales-and-promotions)
-     - 8.5 [Marketing Goals and Supporting Strategies](#85-marketting-goals-and-supporting-strategies)  
+     - 8.5 [Marketting Goals and Supporting Strategies](#85-marketting-goals-and-supporting-strategies)  
 Search Engine Optimization (SEO)
 Meta tags
 Sitemap & robots.txt
@@ -193,6 +193,7 @@ Display approved comments on the homepage or under profile pages.
 - Lighthouse 
 A report generated with Chrome Lighthouse showed no major issues with performance or accessibility.
 ![Lighthouse result](static/images/readme-images/lighthouse.png)
+- [XML-Sitemaps.com](https://www.xml-sitemaps.com/validate-xml-sitemap.html) Came back with no issues detected.
 
 ### 5.2 Automated Tests
 A total of 46 automated tests were written to cover models, views, and forms across both applications.
@@ -212,7 +213,7 @@ All tests passed successfully.
 
 ### 6. E-Commerce Implementation
 
-## 7. Authentication & Role-Based Authorization
+## 7. Authentification & Role-Based Authorization
 The application uses a secure authentication system to manage user access and protect sensitive data. Users can register, log in, and access functionality based on their assigned role (Student, Teacher, or Admin). Role-based authorization ensures that users can only access the features relevant to their role, maintaining privacy, security, and operational integrity.
 
 #### Access & Permission:
@@ -295,7 +296,7 @@ Travelers/Young Adults: Instagram visuals and email freebies (phrase guides lead
 Exam seasons: Focus on Instagram + email for students.
 Travel seasons: Emphasize Instagram aspirational posts + follow-up emails.
 Year-round: Keep bundle promotions active on Facebook and within email drip campaigns.
-### 8.5 Marketing Goals and Supporting Strategies
+### 8.5 Marketting Goals and Supporting Strategies
 - Goal 1: Attract New Users
 Strategy: Increase brand awareness through shareable content and targeted advertising.
 Tactics: Instagram reels showcasing lessons, Facebook ads targeted to relevant audiences, SEO-optimized blog posts on learning French.
@@ -318,6 +319,58 @@ Instagram: Target students, travelers, professionals — short, aspirational con
 Email: Target all segments for conversion and retention (newsletters, promotions, personalized reminders).
 
 ## 9. Deployment & Setup
+This project was deployed to [Heroku](https://id.heroku.com/): a hosting platform.
+
+1. Create a Database 
+     - I used PostgreSQL.
+2. Create a new app on Heroku.
+     - Navigate to the Heroku dashboard and create a new app.
+3. Configure Database
+     - In the 'Settings' tab of your new app, under 'CONFIG VARS', add a key called DATABASE_URL and paste the database URL into the value field.
+4. Configure Stripe
+     - Create a Stripe account if you don’t have one.
+     - In your env.py file and Heroku CONFIG VARS, add:
+          - STRIPE_PUBLIC_KEY=<your-public-key>
+          - STRIPE_SECRET_KEY=<your-secret-key>
+     - Use test keys for development and live keys for production.
+5. Configure AWS for Media Storage
+     - Create an AWS S3 bucket for storing media files.
+     - Add the following to your env.py file and Heroku CONFIG VARS:
+         - AWS_ACCESS_KEY_ID=<your-access-key>
+         - AWS_SECRET_ACCESS_KEY=<your-secret-key>
+         - AWS_STORAGE_BUCKET_NAME=<your-bucket-name>
+     - Update settings.py to use django-storages for media storage with:
+         - DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+6. Clone the repository from GitHub and connect to Heroku
+    - Clone the repository from GitHub locally.
+    - Connect your project to Heroku via the Deploy tab.
+7. Add your env.py file to .gitignore
+     - Ensure all sensitive environment variables are stored only in your env.py file and never pushed to GitHub, including: 
+         - SECRET_KEY
+         - STRIPE_PUBLIC_KEY
+         - STRIPE_SECRET_KEY
+         - AWS_ACCESS_KEY_ID
+         - AWS_SECRET_ACCESS_KEY
+         - AWS_STORAGE_BUCKET_NAME,
+8. Update your CONFIG VARS section on Heroku
+     - Add the same environment variables to Heroku’s CONFIG VARS.
+9. Configure Django settings
+     - Update your settings.py to read from environment variables (SECRET_KEY, DATABASE_URL, DEBUG...).
+     - Set ALLOWED_HOSTS to include your Heroku app's domain.
+     - Configure static files using WhiteNoise by adding it to MIDDLEWARE in settings.py.
+     - Ensure DEBUG = False in production, and DEBUG = True locally for development.
+10. Install Dependencies
+     - Ensure all dependencies are installed by running: pip install -r requirements.txt
+11. Collect Static files
+     - Collect the static files in your project using: python manage.py collectstatic
+12. Create a Superuser
+     - Run : python manage.py createsuperuser
+     - Follow the prompts to set username, email, and password(this allows you to access the Django admin panel).
+13. Deploy the App
+     - Go to the Deploy tab of your app in Heroku.
+     - Choose the main branch.
+     - Click Deploy Branch manually.
+     - Once deployed, visit your Heroku app to verify it is running.
 
 ## 10. Bugs & Challenges Encountered
 
