@@ -1,1 +1,303 @@
 # petit-talk
+
+"Petit Talk" is built using Django, Python, JavaScript, HTML, CSS, Stripe and PostgreSQL. It is hosted on Heroku.
+
+![Mockup of Petit Talk website](static/images/readme-images/mockup.png)
+
+To visit the deployed version of Petit Talk : [click here.](https://petit-talk-ca40a73c8b94.herokuapp.com/)
+
+## Table of Contents
+
+1. [Purpose](#1-purpose).
+2. [Users & Website Goals](#2-users--website-goals)
+3. [Features](#3-features)
+4. [Planning](#4-planning)
+     - 4.1. [User Stories](#41-user-stories)
+     - 4.2. [Epics](#42-epics)
+     - 4.3. [Sprints](#43-sprints)
+     - 4.4. [Database Diagram](#44-database-diagram)
+     - 4.5. [Project Structure](#45-project-structure)
+     - 4.6. [App Overview & Responsibilities](#46-app-overview--responsibilities)
+5. [Testing](#5-testing)
+     - 5.1 [Validators and Linters](#51-validators-and-linters)
+     - 5.2 [Automated Tests](#52-automated-tests)
+     - 5.3 [Manual Tests](#53-manual-tests)
+     - 5.4 [Responsiveness & Accessibility](#54-responsiveness--accessibility)
+6. [E-Commerce Implementation](#6-e-commerce-implementation)
+Products & Models
+Payment Integration
+CRUD Functionality
+Forms & Validation
+Feedback & Notifications
+7. [Authentication & Role-Based Authorization](#7-authentification--role-based-authorisation)
+User Registration & Login
+Role-Based Access Control
+Security Measures
+8. [SEO & Marketing](#8-seo--marketting)
+     - 8.1. [Target Audience](#81-target-audience)
+     - 8.2. [Platforms for Engagement](#82-platforms-for-engagement)
+     - 8.3. [User Needs and Content Strategy](#83-user-needs-and-content-strategy)
+     - 8.4. [Sales and Promotions](#84-sales-and-promotions)
+     - 8.5 [Marketing Goals and Supporting Strategies](#85-marketting-goals-and-supporting-strategies)  
+Search Engine Optimization (SEO)
+Meta tags
+Sitemap & robots.txt
+404 pages & redirects
+Internal linking
+Marketing Techniques
+Facebook page & social media
+Newsletter signup
+Branding & promotion strategy
+9. [Deployment & Setup](#9-deployment--setup)
+E-Commerce Business Model
+10. [Bugs & Challenges Encountered](#10-bugs--challenges-encountered)
+11. [Credits](#11-credits)
+
+## 1. Purpose
+
+Petit Talk is an online French learning platform that connects students with native French speakers. The service allows students to improve their pronunciation, learn authentic French, and interact with real teachers through live sessions. The application includes a secure booking system, integrated payment system, special offers, a newsletter signup, teacher and student profiles, and the option for students to leave feedback.
+
+Teachers can accept or decline bookings, while administrators manage teachers, subscriptions, offers, newsletters, and bookings through a secure role-based dashboard. The full-stack web application ensures a safe, seamless, and responsive experience for all users.
+
+Project Goals:
+- Provide a seamless, responsive booking and payment experience for students.
+- Prevent scheduling conflicts through time-slot management for teachers and students.
+- Ensure secure payment processing for all transactions.
+- Offer students a personalized dashboard to view, manage, and track their bookings and payment basket.
+- Enable teachers to manage their availability, accept or decline bookings, and interact with students.
+- Allow administrators to manage teachers, offers, subscriptions, newsletters, and bookings efficiently.
+- Deliver a consistent, user-friendly interface that reflects a professional and engaging educational platform.
+
+Target Audience:
+- English-speaking students seeking to learn French from native speakers.
+- Learners looking for interactive, personalized, and authentic language learning experiences.
+
+## 2. Users & Website Goals
+
+## 3. Features
+
+## 4. Planning
+### 4.1 User Stories
+All user stories are documented in the Agile tool linked to this project. Each story includes detailed acceptance criteria and associated tasks. There are 29 user stories and 7 epics in total on the project board, and all have been completed. All of them are connected to an Epic and a Sprint on the board and in this document.
+![Project board](static/images/readme-images/user-story-board.png)
+![User story detailed](static/images/readme-images/user-story-detail.png)
+### 4.2 Epics
+Seven epics were created to organize and plan this project:
+![Epic 1](static/images/readme-images/epic-1.png)
+![Epic 2](static/images/readme-images/epic-2.png)
+![Epic 3](static/images/readme-images/epic-3.png)
+![Epic 4](static/images/readme-images/epic-4.png)
+![Epic 5](static/images/readme-images/epic-5.png)
+![Epic 6](static/images/readme-images/epic-6.png)
+![Epic 7](static/images/readme-images/epic-7.png)
+### 4.3 Sprints
+Four Sprints were created to organize and plan this project:
+![Sprint 1](static/images/readme-images/sprint-1.png)
+![Sprint 2](static/images/readme-images/sprint-2.png)
+![Sprint 3](static/images/readme-images/sprint-3.png)
+![Sprint 4](static/images/readme-images/sprint-4.png)
+### 4.4 Database Diagram
+To plan the relationships between my models, I created the following database diagram.
+ - User (Django built-in)
+ ![User Database Diagram](static/images/readme-images/user-model.png)
+ - Profile Model
+ ![Profile Database Diagram](static/images/readme-images/profile-model.png)
+ - Booking Model
+ ![Booking Database Diagram](static/images/readme-images/booking-model.png)
+ - Order Model
+ ![Order Database Diagram](static/images/readme-images/order-model.png)
+ - Offer Model
+ ![Offer Database Diagram](static/images/readme-images/offer-model.png)
+ - Newsletter Model
+ ![Newsletter Database Diagram](static/images/readme-images/newsletter-model.png)
+- Comment Model
+ ![Comment Database Diagram](static/images/readme-images/comment-model.png)
+- Models Relationship
+ ![Models Relationship](static/images/readme-images/relationship-models.png)
+### 4.5 Project Structure
+The project was initially organized to maintain a clear and scalable folder structure. Some changes were made during development, such as renaming files and adding new templates.
+![Initial folder structure](static/images/readme-images/folder-structure-1.png)
+![Initial folder structure](static/images/readme-images/folder-structure-2.png)
+### 4.6 App Overview & Responsibilities
+#### Home App:
+- Purpose:
+Serves as the public-facing entry point of the website.
+- Responsibilities:
+Displays the homepage with hero banner, introduction, and featured offers.
+Provides navigation links to other sections (Bookings, Offers, Contact, Login/Register).
+Contains general static pages (About, Terms, etc.) if needed.
+#### Profile App
+- Purpose:
+Manages user profiles and account-related pages.
+- Responsibilities:
+Extends Django’s built-in authentication system.
+Provides profile page with editable information (photo, learning goals, language level, timezone).
+Handles user dashboard displaying past and upcoming bookings.
+Handle role-based profile views (teacher/student/admin)
+Let teachers manage availability
+#### Bookings App
+- Purpose:
+Handles all logic related to class scheduling and management.
+- Responsibilities:
+Allows users to select class date, time, level, and purpose.
+Stores and manages bookings linked to user accounts.
+Displays booking details, status (pending/confirmed/completed/cancelled), and teacher assignment.
+Integrates with the Order app during checkout to confirm payment.
+Handle booking creation per teacher
+Check availability based on teacher’s calendar
+#### Order App
+- Purpose:
+Acts as the shopping cart for temporary session-based storage of selected bookings.
+- Responsibilities:
+Adds, updates, and removes bookings before checkout.
+Displays subtotal and dynamically updates totals.
+Manages session-based cart data until payment is confirmed.
+#### Checkout App
+- Purpose:
+Processes payments securely and finalizes orders.
+- Responsibilities:
+Integrates Stripe for online payments.
+Handles order creation, confirmation, and Stripe webhook responses.
+Updates booking status to “paid” and generates confirmation toast/messages/emails.
+Provides order summary and success/failure pages.
+#### Offers App
+- Purpose:
+Manages promotional offers that apply to user orders.
+- Responsibilities:
+Stores details of active/inactive offers (discount type, value, and description).
+Applies valid offers automatically or via code during checkout.
+Enables admin control to add, edit, hide, or remove offers dynamically.
+#### Newsletter App
+- Purpose:
+Collects email subscriptions for marketing and communication purposes.
+- Responsibilities:
+Provides a newsletter signup form in the homepage.
+Stores user emails in a simple database model for future campaigns.
+Allows admin to manage subscribers through the Django admin interface.
+#### Comments app
+- Purpose:
+Manages user-generated content (comments or posts) displayed on the homepage or profile pages.
+- Responsibilities:
+Allow users to submit a short message, testimonial, or post.
+Require admin approval before being displayed.
+Allow admin moderation (approve/delete).
+Display approved comments on the homepage or under profile pages.
+
+## 5. Testing
+### 5.1 Validators and Linters
+### 5.2 Automated Tests
+### 5.3 Manual Tests
+### 5.4 Responsiveness & Accessibility
+
+### 6. E-Commerce Implementation
+
+## 7. Authentication & Role-Based Authorization
+The application uses a secure authentication system to manage user access and protect sensitive data. Users can register, log in, and access functionality based on their assigned role (Student, Teacher, or Admin). Role-based authorization ensures that users can only access the features relevant to their role, maintaining privacy, security, and operational integrity.
+
+#### Access & Permission:
+![Access and permissions](static/images/readme-images/access-permission.png)
+
+## 8. SEO & Marketing
+### 8.1 Target Audience
+The platform is designed for English speakers interested in learning French with a native teacher. Key user groups include:
+- Students (Teens & University Level)
+Needs: Academic support, exam preparation, improved grades.
+Motivations: Passing school requirements, strengthening CVs, preparing for exchange programs.
+Approach: Promote affordable lesson packages, flexible scheduling, and the benefit of learning directly with a native speaker.
+- Parents of Students
+Needs: Reliable and effective tutoring for their children.
+Motivations: Supporting academic success.
+Approach: Highlight professionalism, safety, and proven results. Showcase structured lesson plans and progress tracking.
+- Adult Learners & Professionals
+Needs: Language skills for career advancement, relocation, or business travel.
+Motivations: Professional development, competitive advantage, international opportunities.
+Approach: Position lessons as efficient, tailored, and practical. Present the service as a higher-value investment compared to free apps.
+- Travelers & Culture Enthusiasts
+Needs: Conversational skills and cultural insights for authentic experiences abroad.
+Motivations: Enhancing travel, enjoying French lifestyle and traditions.
+Approach: Use aspirational branding (café, Parisian atmosphere). Offer crash courses and cultural content.
+- Retirees & Hobby Learners
+Needs: Stimulating and enjoyable activity.
+Motivations: Lifelong learning, cultural connection, personal enrichment.
+Approach: Emphasize fun, community, and learning at a comfortable pace.
+Key Differentiator: The “real French teacher” element builds authenticity, credibility, and cultural immersion across all segments.
+### 8.2 Platforms for Engagement
+- Facebook
+![Facebook page](static/images/readme-images/facebook.png)
+![Facebook page](static/images/readme-images/facebook-details.png)
+Primary Audiences: Parents, retirees, and adult learners (30+).
+Why it Works: Strong with older demographics, active parenting and education communities, and precise demographic targeting for ads.
+Content Style: Testimonials, structured offers, cultural insights.
+- Instagram
+Primary Audiences: Students, young adults, travelers, and professionals (16–35).
+Why it Works: Visual, aspirational, and lifestyle-driven platform. Strong reach through reels and hashtags.
+Content Style: Short lessons, travel phrases, cultural tips, and aspirational French-themed visuals.
+### 8.3 User Needs and Content Strategy
+- Parents (Facebook)
+Needs: Trustworthy support for children’s French classes.
+Content: Testimonials, before/after success stories, learning tips.
+Delivery: Facebook posts/ads; email newsletters with progress tips and resources.
+- Retirees (Facebook)
+Needs: Engaging cultural activity and travel preparation.
+Content: Simple phrases, cultural spotlights, brain-health stories.
+Delivery: Friendly Facebook posts; email “word of the week” campaigns.
+- Students (Instagram)
+Needs: Exam prep, quick learning, stress relief.
+Content: Grammar hacks, vocabulary challenges, humor/memes.
+Delivery: Instagram reels, quizzes, and email reminders before exams.
+- Travelers (Instagram)
+Needs: Practical phrases, cultural etiquette.
+Content: Travel-specific reels, visual phrase carousels, mini cultural guides.
+Delivery: Instagram posts; downloadable PDF “French Travel Survival Kit” via email signup.
+- Professionals (Instagram & Email)
+Needs: Efficient career-focused learning.
+Content: Business vocabulary, case studies, productivity tips.
+Delivery: Instagram carousels; segmented email sequences promoting professional packages.
+- Multi-Channel Approach:
+Facebook → Trust-building with parents and retirees.
+Instagram → Engagement with students, travelers, and professionals.
+Email → Nurturing and conversions across all audiences.
+### 8.4 Sales and Promotions
+- Bundle Offers
+Buy 5 lessons, get 1 free.
+10-lesson packs at reduced per-unit cost.
+Purpose: Encourage commitment and increase retention.
+- Seasonal Offers
+Exam Prep Bundles (spring/fall).
+Travel Crash Courses (summer, holidays).
+New Year/Back-to-School Promotions.
+- Communication Channels
+Parents & Retirees: Facebook posts/ads and email newsletters with clear, trust-building messages.
+Students: Instagram reels/stories and exam-season email offers.
+Travelers/Young Adults: Instagram visuals and email freebies (phrase guides leading to bundles).
+- Timing Strategy
+Exam seasons: Focus on Instagram + email for students.
+Travel seasons: Emphasize Instagram aspirational posts + follow-up emails.
+Year-round: Keep bundle promotions active on Facebook and within email drip campaigns.
+### 8.5 Marketing Goals and Supporting Strategies
+- Goal 1: Attract New Users
+Strategy: Increase brand awareness through shareable content and targeted advertising.
+Tactics: Instagram reels showcasing lessons, Facebook ads targeted to relevant audiences, SEO-optimized blog posts on learning French.
+KPIs: Reach, impressions, website visits from social channels.
+- Goal 2: Convert Visitors into Paying Students
+Strategy: Encourage sign-ups with clear offers and strong calls-to-action.
+Tactics: Bundle deals, dedicated landing pages for special offers, email nurture sequences highlighting teacher expertise and testimonials.
+KPIs: Sign-ups, checkout conversions, coupon redemptions.
+- Goal 3: Retain Customers
+Strategy: Build loyalty through consistent value, engagement, and rewards.
+Tactics: Newsletter campaigns, repeat-purchase discounts, referral programs, push notifications for upcoming classes.
+KPIs: Repeat bookings, newsletter open rates, referral conversions.
+- Goal 4: Build Brand Identity
+Strategy: Leverage authenticity, cultural appeal, and teacher/student stories.
+Tactics: Consistent French-inspired branding across website and socials, behind-the-scenes content, teacher/student spotlight reels and stories.
+KPIs: Engagement (likes, shares, comments), brand recall metrics, social media followers growth.
+- Channel Focus:
+Facebook: Target parents and older audiences — longer, trust-building content.
+Instagram: Target students, travelers, professionals — short, aspirational content.
+Email: Target all segments for conversion and retention (newsletters, promotions, personalized reminders).
+
+## 9. Deployment & Setup
+
+## 10. Bugs & Challenges Encountered
+
+## 11. Credits

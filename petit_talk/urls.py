@@ -11,7 +11,8 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django-sitemap'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django-sitemap'),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
     path("bookings/", include("bookings.urls")),
@@ -25,5 +26,7 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )

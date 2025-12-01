@@ -5,6 +5,7 @@ from .models import Order, CLASS_PRICE_EUR
 from bookings.models import Booking
 from django.db import transaction
 
+
 @login_required
 def view_bag(request):
     """Show student's unpaid / pending bookings."""
@@ -33,32 +34,19 @@ def view_bag(request):
         "discount": discount,
     })
 
+
 @login_required
 def remove_from_bag(request, booking_id):
     """Remove booking from bag."""
     booking = get_object_or_404(Booking, id=booking_id, student=request.user)
     if booking.status not in ['PENDING', 'UNPAID']:
-        messages.error(request, "Only unpaid/pending bookings can be removed from bag.")
+        messages.error(
+            request,
+            "Only unpaid/pending bookings can be removed from bag."
+        )
         return redirect('view_bag')
 
     booking.delete()
 
     messages.success(request, "Booking removed from your bag.")
     return redirect('view_bag')
-
-#@login_required
-#@transaction.atomic
-#def create_order(request):
-    #bag_bookings = Booking.objects.filter(student=request.user, status='PENDING')
-    #if not bag_bookings.exists():
-        #messages.error(request, "There are no items in your bag.")
-        #return redirect('view_bag')
-
-    #order = Order.objects.create(student=request.user)
-    #order.bookings.set(bag_bookings)
-    #order.calculate_total()
-    #order.save()
-
-    #return redirect("create_checkout_session", order_id=order.id)
-
-
