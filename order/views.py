@@ -34,7 +34,7 @@ def view_bag(request):
         "discount": discount,
     })
 
-
+#test commit
 @login_required
 def remove_from_bag(request, booking_id):
     """Remove booking from bag."""
