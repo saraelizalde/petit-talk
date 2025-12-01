@@ -116,6 +116,7 @@ To plan the relationships between my models, I created the following database di
  ![Models Relationship](static/images/readme-images/relationship-models.png)
 ### 4.5 Project Structure
 The project was initially organized to maintain a clear and scalable folder structure. Some changes were made during development, such as renaming files and adding new templates.
+
 ![Initial folder structure](static/images/readme-images/folder-structure-1.png)
 ![Initial folder structure](static/images/readme-images/folder-structure-2.png)
 ### 4.6 App Overview & Responsibilities
@@ -185,9 +186,29 @@ Display approved comments on the homepage or under profile pages.
 
 ## 5. Testing
 ### 5.1 Validators and Linters
+- [CI Python Linter](https://pep8ci.herokuapp.com/): Initially found multiple syntax and style issues. All have been resolved.
+- [W3C Markup Validator](https://validator.w3.org/): Every errors have been resolved.
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/): No errors found.
+- [JS Hint](https://jshint.com/): No errors found.
+- Lighthouse 
+A report generated with Chrome Lighthouse showed no major issues with performance or accessibility.
+![Lighthouse result](static/images/readme-images/lighthouse.png)
+
 ### 5.2 Automated Tests
+A total of 46 automated tests were written to cover models, views, and forms across both applications.
+All tests passed successfully.
+![Automated tests results](static/images/readme-images/test-console.png)
 ### 5.3 Manual Tests
 ### 5.4 Responsiveness & Accessibility
+- Website is responsive on desktop, tablet, and mobile.
+- Navbar collapses correctly on smaller screens.
+- Text and buttons are readable on all screen sizes.
+- Contrast and color choices meet accessibility standards.
+- Staff and teachers dashboards are optimized for larger screens but still works on smaller screens.
+- Tested on Chrome DevTools with multiple screen sizes
+- The website has been tested on different browsers such as Chrome, Firefox and Safari and all works.
+![Nav-bar on bigger screen](static/images/readme-images/nav-bar-big-screen.png)
+![Nav-bar on smaller screen](static/images/readme-images/nav-bar-small-screen.png)
 
 ### 6. E-Commerce Implementation
 
